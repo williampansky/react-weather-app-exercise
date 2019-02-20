@@ -10,7 +10,7 @@ const CityState = styled.h1`
     font-weight: 600;
 `;
 
-class Location extends React.Component {
+class AppLocation extends React.Component {
     render() {
         return (
             <Wrapper>
@@ -20,4 +20,4 @@ class Location extends React.Component {
     }
 }
 
-export default Location;
+export default AppLocation;

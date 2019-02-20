@@ -3,11 +3,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import './styles.css';
-import AppGraphic from './AppGraphic';
-import AppDay from './AppDay';
-import AppLocation from './AppLocation';
-import AppToday from './AppToday';
+import './styles/styles.css';
+import AppGraphic from './components/AppGraphic';
+import AppDay from './components/AppDay';
+import AppLocation from './components/AppLocation';
+import AppSwitcher from './components/AppSwitcher';
+import AppToday from './components/AppToday';
+import TodaysWeather from './components/TodaysWeather';
 
 const Main = styled.main`
     display: flex;
@@ -17,6 +19,7 @@ const Main = styled.main`
 `;
 
 const Week = styled.section`
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -49,6 +52,7 @@ const TodaysWeatherAndControls = styled.div`
 `;
 
 const Graphic = styled.footer`
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
     width: 100%;
     position: relative;
 `;
@@ -63,8 +67,12 @@ function App() {
                 </Info>
                 <Graphic>
                     <TodaysWeatherAndControls>
-                        <div>93</div>
-                        <div>C/F</div>
+                        <TodaysWeather
+                            degrees="93"
+                            sky="Partly Cloudy"
+                            wind="12"
+                        />
+                        <AppSwitcher />
                     </TodaysWeatherAndControls>
                     <AppGraphic />
                 </Graphic>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AppIcon from '../components/AppIcon';
 
 const Article = styled.article`
     background: white;
@@ -34,31 +35,27 @@ const Header = styled.header`
     text-transform: capitalize;
 `;
 
-const Icon = styled.div`
-    width: 60px;
-    height: 60px;
-    background: gray;
-`;
-
 const Footer = styled.footer`
     font-size: 1.5em;
     line-height: 1;
     font-weight: 300;
     margin-top: 0.425em;
+    position: relative;
+    left: 4px;
 `;
 
 // const DayOfWeek = props => <div>{props.day}</div>;
 
-class Day extends React.Component {
+class AppDay extends React.Component {
     render() {
         return (
             <Article>
                 <Header>{this.props.day}</Header>
-                <Icon />
-                <Footer>{this.props.temperature}</Footer>
+                <AppIcon />
+                <Footer>{this.props.temperature}°</Footer>
             </Article>
         );
     }
 }
 
-export default Day;
+export default AppDay;

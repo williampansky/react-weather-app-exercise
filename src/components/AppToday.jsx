@@ -3,14 +3,15 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div``;
 
-const Date = styled.h2`
+const Date = styled.time`
+    display: block;
     margin: 0;
     font-weight: normal;
     font-size: 1em;
     line-height: 1;
 `;
 
-class Today extends React.Component {
+class AppToday extends React.Component {
     render() {
         return (
             <Wrapper>
@@ -20,4 +21,4 @@ class Today extends React.Component {
     }
 }
 
-export default Today;
+export default AppToday;

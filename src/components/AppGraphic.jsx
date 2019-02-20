@@ -7,15 +7,15 @@ const Wrapper = styled.section`
     min-height: 400px;
     max-height: 430px;
     height: 100%;
-    background: gray;
+    background: lightgray;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 `;
 
-class Graphic extends React.Component {
+class AppGraphic extends React.Component {
     render() {
         return <Wrapper />;
     }
 }
 
-export default Graphic;
+export default AppGraphic;

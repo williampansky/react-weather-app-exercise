@@ -7,10 +7,10 @@ const Element = styled.label`
     line-height: 1;
 `;
 
-class Label extends React.Component {
+class AppLabel extends React.Component {
     render() {
         return <Element>{this.props.text}</Element>;
     }
 }
 
-export default Label;
+export default AppLabel;
