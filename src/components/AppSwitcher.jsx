@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const SwitcherForm = styled.form`
     width: 55px;
     height: 25px;
     border-radius: 12.5px;
-    padding: 0 4px;
+    padding: 0 2px;
     background-color: #2685bd;
     display: flex;
     flex-flow: row nowrap;
@@ -13,13 +13,15 @@ const Wrapper = styled.div`
     justify-content: space-between;
 `;
 
-const Item = styled.button`
+const Item = styled.div`
+    cursor: pointer;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     width: 21px;
     height: 21px;
     padding: 4px;
-    background-color: ${props => (props.active ? '#fff' : 'none')};
+    color: ${props => (props.selectedValue ? '#2685bd' : '#fff')};
+    background: ${props => (props.selectedValue ? '#2685bd' : 'transparent')};
     border-radius: 50%;
     border: 0;
     appearance: none;
@@ -35,9 +37,19 @@ const Item = styled.button`
     justify-content: center;
     position: relative;
 
-    & span {
+    & label {
+        cursor: pointer;
         position: relative;
         left: -1px;
+    }
+
+    & input {
+        display: none;
+    }
+
+    &.active {
+        color: #2685bd;
+        background-color: #fff;
     }
 
     &:before {
@@ -50,16 +62,54 @@ const Item = styled.button`
 `;
 
 class AppSwitcher extends React.Component {
+    state = {
+        selectedValue: 'F'
+    };
+
+    handleChange = event => {
+        this.setState({
+            ...this.state,
+            selectedValue: event.target.value
+        });
+    };
+
+    change(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
     render() {
         return (
-            <Wrapper>
-                <Item>
-                    <span>C</span>
+            <SwitcherForm>
+                <Item
+                    className={this.state.selectedValue === 'C' ? 'active' : ''}
+                >
+                    <label>
+                        <input
+                            type="radio"
+                            name="radio"
+                            value="C"
+                            onChange={this.handleChange}
+                        />
+                        C
+                    </label>
                 </Item>
-                <Item active>
-                    <span>F</span>
+                <Item
+                    className={this.state.selectedValue === 'F' ? 'active' : ''}
+                >
+                    <label>
+                        <input
+                            type="radio"
+                            name="radio"
+                            value="F"
+                            defaultChecked
+                            onChange={this.handleChange}
+                        />
+                        F
+                    </label>
                 </Item>
-            </Wrapper>
+            </SwitcherForm>
         );
     }
 }

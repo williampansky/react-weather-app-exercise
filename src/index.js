@@ -16,14 +16,17 @@ const Main = styled.main`
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    max-width: 670px;
 `;
 
 const Week = styled.section`
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
 `;
 
 const Location = styled.article`
@@ -35,6 +38,7 @@ const Info = styled.header`
     padding: 1em;
     width: 100%;
     text-align: center;
+    margin: 0 auto 20px;
 `;
 
 const TodaysWeatherAndControls = styled.div`
@@ -48,7 +52,7 @@ const TodaysWeatherAndControls = styled.div`
     bottom: auto;
     left: 0;
     z-index: 1;
-    padding: 2em 2.5em;
+    padding: 1.5em 2em;
 `;
 
 const Graphic = styled.footer`
@@ -71,6 +75,7 @@ function App() {
                             degrees="93"
                             sky="Partly Cloudy"
                             wind="12"
+                            icon="cloud-sun"
                         />
                         <AppSwitcher />
                     </TodaysWeatherAndControls>
@@ -78,11 +83,11 @@ function App() {
                 </Graphic>
             </Location>
             <Week>
-                <AppDay day="sun" temperature="92" />
-                <AppDay day="mon" temperature="87" />
-                <AppDay day="tue" temperature="93" />
-                <AppDay day="wed" temperature="95" />
-                <AppDay day="thur" temperature="88" />
+                <AppDay day="sun" icon="cloud-drizzle" temperature="92" />
+                <AppDay day="mon" icon="cloud-sun" temperature="87" />
+                <AppDay day="tue" icon="cloud-drizzle-sun" temperature="93" />
+                <AppDay day="wed" icon="cloud-lightning" temperature="95" />
+                <AppDay day="thur" icon="cloud-sun" temperature="88" />
             </Week>
         </Main>
     );

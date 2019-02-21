@@ -1,7 +1,20 @@
+:root {
+    --color-primary: #65aed5;
+    --color-secondary: #28a5f5;
+    --color-accent: #e5e53e;
+
+    --color-success: #32d296;
+    --color-warning: #faa05a;
+    --color-danger: #f23e60;
+
+    --color-black: #4a4a4a;
+}
+
 *,
 *:before,
 *:after {
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
@@ -21,4 +34,9 @@ body {
     justify-content: center;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+}
+
+.icon svg {
+    width: 20px;
+    height: 20px;
 }

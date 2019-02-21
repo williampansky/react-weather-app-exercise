@@ -4,9 +4,9 @@ import AppIcon from '../components/AppIcon';
 
 const Article = styled.article`
     background: white;
-    color: black;
+    color: var(--color-black);
     margin: 0;
-    padding: 1em 2.5em;
+    padding: 1em 2em;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -25,6 +25,11 @@ const Article = styled.article`
     &:last-child {
         border-bottom-right-radius: 3px;
     }
+
+    & .icon svg {
+        width: 45px;
+        height: 45px;
+    }
 `;
 
 const Header = styled.header`
@@ -36,9 +41,9 @@ const Header = styled.header`
 `;
 
 const Footer = styled.footer`
-    font-size: 1.5em;
+    font-size: 1.625em;
     line-height: 1;
-    font-weight: 300;
+    font-weight: 400;
     margin-top: 0.425em;
     position: relative;
     left: 4px;
@@ -51,7 +56,7 @@ class AppDay extends React.Component {
         return (
             <Article>
                 <Header>{this.props.day}</Header>
-                <AppIcon />
+                <AppIcon src={'media/' + this.props.icon + '.svg'} />
                 <Footer>{this.props.temperature}°</Footer>
             </Article>
         );

@@ -1,6 +1,6 @@
 {
     "name": "weather-app",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "description": "",
     "keywords": [],
     "main": "src/index.js",
@@ -8,6 +8,7 @@
         "axios": "0.18.0",
         "react": "16.8.0",
         "react-dom": "16.8.0",
+        "react-inlinesvg": "0.8.4",
         "react-scripts": "2.0.3",
         "styled-components": "4.1.3"
     },

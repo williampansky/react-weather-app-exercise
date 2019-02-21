@@ -11,9 +11,21 @@ const Wrapper = styled.div`
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
+
+    & .icon {
+        position: relative;
+        top: 5px;
+        left: -4px;
+    }
+
+    & .icon svg {
+        width: 46px;
+        height: 46px;
+    }
 `;
 
 const Degrees = styled.div`
+    color: var(--color-primary);
     display: block;
     font-size: 48px;
     font-weight: normal;
@@ -29,15 +41,17 @@ const Degrees = styled.div`
 const DegreesIcon = styled.sup`
     font-size: 0.675em;
     position: relative;
-    top: 10px;
+    top: 8px;
 `;
 
 const Conditions = styled.div`
+    color: var(--color-primary);
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
-    margin-left: ${component.margin};
+    margin-left: calc(${component.margin} - 4px);
     font-size: 14px;
+    font-weight: 600;
 `;
 
 const SkyConditions = styled.span`
@@ -52,7 +66,7 @@ const WindConditions = styled.span`
     line-height: 1;
 `;
 
-class TodaysWeather extends React.Component {
+class TodaysWeatherConditions extends React.Component {
     render() {
         return (
             <Wrapper>
@@ -60,7 +74,7 @@ class TodaysWeather extends React.Component {
                     {this.props.degrees}
                     <DegreesIcon>°</DegreesIcon>
                 </Degrees>
-                <AppIcon />
+                <AppIcon src={'media/' + this.props.icon + '.svg'} />
                 <Conditions>
                     <SkyConditions>{this.props.sky}</SkyConditions>
                     <WindConditions>{this.props.wind}mph</WindConditions>
@@ -70,4 +84,4 @@ class TodaysWeather extends React.Component {
     }
 }
 
-export default TodaysWeather;
+export default TodaysWeatherConditions;
