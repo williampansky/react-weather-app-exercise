@@ -1,3 +1,8 @@
+/**
+ * @module AppSwitcher
+ * @version 0.2.3
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 
@@ -14,17 +19,16 @@ const SwitcherForm = styled.form`
 `;
 
 const Item = styled.div`
-    cursor: pointer;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     width: 21px;
     height: 21px;
-    padding: 4px;
+    padding: 0;
     color: ${props => (props.selectedValue ? '#2685bd' : '#fff')};
     background: ${props => (props.selectedValue ? '#2685bd' : 'transparent')};
     border-radius: 50%;
     border: 0;
-    appearance: none;
+
     font-weight: 600;
     font-style: normal;
     font-stretch: normal;
@@ -39,12 +43,18 @@ const Item = styled.div`
 
     & label {
         cursor: pointer;
+        padding: 4px 8px;
         position: relative;
         left: -1px;
     }
 
     & input {
         display: none;
+        appearance: none;
+    }
+
+    & input:focus {
+        outline: 1px solid;
     }
 
     &.active {
@@ -83,26 +93,30 @@ class AppSwitcher extends React.Component {
         return (
             <SwitcherForm>
                 <Item
-                    className={this.state.selectedValue === 'C' ? 'active' : ''}
-                >
+                    className={
+                        this.state.selectedValue === 'C' ? 'active' : ''
+                    }>
                     <label>
                         <input
                             type="radio"
                             name="radio"
                             value="C"
+                            tabIndex="0"
                             onChange={this.handleChange}
                         />
                         C
                     </label>
                 </Item>
                 <Item
-                    className={this.state.selectedValue === 'F' ? 'active' : ''}
-                >
+                    className={
+                        this.state.selectedValue === 'F' ? 'active' : ''
+                    }>
                     <label>
                         <input
                             type="radio"
                             name="radio"
                             value="F"
+                            tabIndex="0"
                             defaultChecked
                             onChange={this.handleChange}
                         />

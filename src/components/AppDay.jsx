@@ -1,6 +1,17 @@
+/**
+ * Displays a single day of the upcoming 5-day week. It visually shows a user
+ * an abbreviated day name, an icon representing the day's projected weather
+ * conditions, and the temperature from the api call.
+ *
+ * @module AppDay
+ * @version 0.1.4
+ * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
+import { format } from 'date-fns';
 
 const Article = styled.article`
     background: white;
@@ -49,15 +60,13 @@ const Footer = styled.footer`
     left: 4px;
 `;
 
-// const DayOfWeek = props => <div>{props.day}</div>;
-
 class AppDay extends React.Component {
     render() {
         return (
             <Article>
-                <Header>{this.props.day}</Header>
+                <Header>{format(this.props.day, 'ddd')}</Header>
                 <AppIcon src={'media/' + this.props.icon + '.svg'} />
-                <Footer>{this.props.temperature}°</Footer>
+                <Footer>{Math.round(this.props.degrees)}°</Footer>
             </Article>
         );
     }

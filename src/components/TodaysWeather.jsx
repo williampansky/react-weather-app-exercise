@@ -1,3 +1,8 @@
+/**
+ * @module TodaysWeather
+ * @version 0.1.3
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
@@ -58,6 +63,7 @@ const SkyConditions = styled.span`
     display: block;
     font-size: 1em;
     line-height: 1.5;
+    text-transform: capitalize;
 `;
 
 const WindConditions = styled.span`
@@ -71,13 +77,15 @@ class TodaysWeatherConditions extends React.Component {
         return (
             <Wrapper>
                 <Degrees>
-                    {this.props.degrees}
+                    {Math.round(this.props.degrees)}
                     <DegreesIcon>°</DegreesIcon>
                 </Degrees>
                 <AppIcon src={'media/' + this.props.icon + '.svg'} />
                 <Conditions>
                     <SkyConditions>{this.props.sky}</SkyConditions>
-                    <WindConditions>{this.props.wind}mph</WindConditions>
+                    <WindConditions>
+                        {Math.round(this.props.wind)} mph
+                    </WindConditions>
                 </Conditions>
             </Wrapper>
         );

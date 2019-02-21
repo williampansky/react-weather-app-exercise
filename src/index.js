@@ -1,15 +1,21 @@
-// https://blog.bitsrc.io/reusable-components-in-react-
-// a-practical-guide-ec15a81a4d71
-import React from 'react';
+/**
+ * @namespace App
+ * @version 0.1.4
+ * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
+ */
+
+import './styles/styles.css';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import './styles/styles.css';
 import AppGraphic from './components/AppGraphic';
 import AppDay from './components/AppDay';
 import AppLocation from './components/AppLocation';
 import AppSwitcher from './components/AppSwitcher';
 import AppToday from './components/AppToday';
 import TodaysWeather from './components/TodaysWeather';
+import Api from './api';
+import createPersistedState from 'use-persisted-state';
 
 const Main = styled.main`
     display: flex;
@@ -18,6 +24,8 @@ const Main = styled.main`
     justify-content: center;
     width: 100%;
     max-width: 670px;
+    height: 92%;
+    margin: auto;
 `;
 
 const Week = styled.section`
@@ -62,19 +70,42 @@ const Graphic = styled.footer`
 `;
 
 function App() {
+    /**
+     * @see [persisted-state]
+     * {@link https://github.com/donavon/use-persisted-state}
+     */
+    const useWeatherState = createPersistedState('api');
+    const [api, setData] = useWeatherState();
+
+    /**
+     * @see [Reference]
+     * {@link https://www.robinwieruch.de/react-hooks-fetch-data/}
+     */
+    const fetchData = async () => {
+        const result = await Api.get();
+
+        console.log(result.data);
+        setData(result.data);
+    };
+
+    useEffect(() => {
+        // fetchData();
+        if (localStorage.getItem(api)) fetchData();
+    }, []);
+
     return (
         <Main>
             <Location>
                 <Info>
-                    <AppLocation location="Dallas, TX" />
-                    <AppToday day="Saturday, Sep 16, 2018" temperature="93" />
+                    <AppLocation city={api.city_name} state={api.state_code} />
+                    <AppToday day={api.data[0].timestamp_utc} />
                 </Info>
                 <Graphic>
                     <TodaysWeatherAndControls>
                         <TodaysWeather
-                            degrees="93"
-                            sky="Partly Cloudy"
-                            wind="12"
+                            degrees={api.data[0].app_temp}
+                            sky={api.data[0].weather.description}
+                            wind={api.data[0].wind_spd}
                             icon="cloud-sun"
                         />
                         <AppSwitcher />
@@ -83,11 +114,31 @@ function App() {
                 </Graphic>
             </Location>
             <Week>
-                <AppDay day="sun" icon="cloud-drizzle" temperature="92" />
-                <AppDay day="mon" icon="cloud-sun" temperature="87" />
-                <AppDay day="tue" icon="cloud-drizzle-sun" temperature="93" />
-                <AppDay day="wed" icon="cloud-lightning" temperature="95" />
-                <AppDay day="thur" icon="cloud-sun" temperature="88" />
+                <AppDay
+                    day={api.data[3].timestamp_utc}
+                    degrees={api.data[3].app_temp}
+                    icon="cloud-drizzle"
+                />
+                <AppDay
+                    day={api.data[11].timestamp_utc}
+                    degrees={api.data[11].app_temp}
+                    icon="cloud-sun"
+                />
+                <AppDay
+                    day={api.data[19].timestamp_utc}
+                    degrees={api.data[19].app_temp}
+                    icon="cloud-drizzle-sun"
+                />
+                <AppDay
+                    day={api.data[27].timestamp_utc}
+                    degrees={api.data[27].app_temp}
+                    icon="cloud-lightning"
+                />
+                <AppDay
+                    day={api.data[35].timestamp_utc}
+                    degrees={api.data[35].app_temp}
+                    icon="cloud-sun"
+                />
             </Week>
         </Main>
     );
