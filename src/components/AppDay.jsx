@@ -11,6 +11,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
+import AppTooltip from '../components/AppTooltip';
 import { format } from 'date-fns';
 
 const Article = styled.article`
@@ -22,8 +23,8 @@ const Article = styled.article`
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
-    text-transform: uppercase;
     text-align: center;
+    position: relative;
 
     & + article {
         border-left: 1px solid #d8d8d8;
@@ -61,9 +62,24 @@ const Footer = styled.footer`
 `;
 
 class AppDay extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hovering: false
+        };
+    }
+
     render() {
+        const active = this.state.hovering ? 'active' : undefined;
+        const handleMouseEnter = () => this.setState({ hovering: true });
+        const handleMouseLeave = () => this.setState({ hovering: false });
+
         return (
-            <Article>
+            <Article
+                className={active}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}>
+                <AppTooltip text={format(this.props.day, 'DD/MM/YYYY')} />
                 <Header>{format(this.props.day, 'ddd')}</Header>
                 <AppIcon src={'media/' + this.props.icon + '.svg'} />
                 <Footer>{Math.round(this.props.degrees)}°</Footer>

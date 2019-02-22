@@ -7,20 +7,25 @@
 import axios from 'axios';
 
 const api = {
-    endpoint: 'https://weatherbit-v1-mashape.p.rapidapi.com/forecast/3hourly',
+    endpoint: 'https://api.weatherbit.io/v2.0/forecast/daily',
     key: localStorage.getItem('key'),
+    city: 'Dallas,TX',
     lat: '32.7766642',
-    lon: '-96.7969879'
+    lon: '-96.7969879',
+    days: 7
 };
 
 export default axios.create({
     baseURL: api.endpoint,
-    headers: {
-        'X-RapidAPI-Key': api.key
-    },
+    // headers: {
+    //     'X-RapidAPI-Key': api.key
+    // },
     params: {
-        lat: api.lat,
-        lon: api.lon,
-        units: 'I'
+        key: api.key,
+        city: api.city,
+        // lat: api.lat,
+        // lon: api.lon,
+        units: 'I',
+        days: api.days
     }
 });

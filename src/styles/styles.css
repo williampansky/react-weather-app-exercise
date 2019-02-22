@@ -40,3 +40,19 @@ body {
     width: 20px;
     height: 20px;
 }
+
+.active .tooltip {
+    animation: scaleUp;
+    animation-duration: 100ms;
+    animation-timing-function: linear;
+    display: block;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
