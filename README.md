@@ -1,4 +1,4 @@
-# Weather App v0.1.7
+# Weather App
 
 > Simple weather app using [create-react-app] in [CodeSandbox].
 

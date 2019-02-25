@@ -1,6 +1,6 @@
 /**
  * @module AppIcon
- * @version 0.1.3
+ * @version 0.1.4
  * @see [react-inlinesvg]{@link https://github.com/gilbarbara/react-inlinesvg}
  */
 
@@ -18,15 +18,25 @@ const Icon = styled.i`
 `;
 
 class AppIcon extends React.Component {
-    myOnLoadHandler() {}
+    constructor(props) {
+        super(props);
+        this.state = {
+            loaded: false
+        };
+    }
+
+    onLoadHandler() {
+        this.setState({ loaded: true });
+    }
     render() {
         return (
             <Icon className="icon">
                 <SVG
-                    cacheGetRequests
+                    className={this.state.loaded ? 'uk-animation-fade' : ''}
+                    // cacheGetRequests
                     preloader={<LoaderIcon />}
                     onLoad={src => {
-                        this.myOnLoadHandler(this.props.src);
+                        this.onLoadHandler(this.props.src);
                     }}
                     src={this.props.src}
                 />

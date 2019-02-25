@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.1.7
+ * @version 0.3.2
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -181,6 +181,8 @@ class App extends React.Component {
                             day={data.valid_date}
                             degrees={data.temp}
                             icon={getIcon(data.weather.code)}
+                            stagger={0.25}
+                            index={i}
                             tooltip={data.valid_date}
                         />
                     ))}

@@ -1,6 +1,6 @@
 /**
  * @module LoaderIcon
- * @version 0.1.1
+ * @version 0.1.2
  * @see [uikit]{@link https://getuikit.com/docs/spinner}
  */
 
@@ -8,14 +8,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Spinner = styled.div`
-    width: inherit;
-    height: inherit;
     animation: uk-spinner-rotate 1.4s linear infinite;
+    height: inherit;
+    opacity: 0.65;
+    width: inherit;
 
     svg {
         stroke: var(--color-gray);
         width: inherit;
         height: inherit;
+        transform: scale(0.75);
     }
 
     @keyframes uk-spinner-rotate {

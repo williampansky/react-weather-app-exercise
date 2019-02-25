@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Api from './api';
 import AppRoot from './App';
 import './styles/styles.css';
+import './styles/animation.css';
 import { differenceInMinutes } from 'date-fns';
 import createPersistedState from 'use-persisted-state';
 
