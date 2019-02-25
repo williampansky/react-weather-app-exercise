@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.1.6
+ * @version 0.1.7
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -102,7 +102,8 @@ class App extends React.Component {
 
         this.state = {
             data: '',
-            scale: localStorage.getItem('degrees')
+            scale: localStorage.getItem('degrees'),
+            units: ''
         };
 
         this.toCelsius = this.toCelsius.bind(this);
@@ -111,35 +112,33 @@ class App extends React.Component {
     }
 
     toCelsius() {
-        console.log('Setting weather to Celsius scale.');
         this.setState({
-            data: this.props.dataC
+            data: this.props.dataC,
+            units: 'm/s'
         });
     }
 
     toFahrenheit() {
-        console.log('Setting weather to Fahrenheit scale.');
         this.setState({
-            data: this.props.data
+            data: this.props.data,
+            units: 'mph'
         });
     }
 
     handleDegreesChange = event => {
         localStorage.setItem('degrees', event.target.value);
         this.setState({ scale: event.target.value });
-
         event.target.value === 'C' ? this.toCelsius() : this.toFahrenheit();
     };
 
     componentDidMount() {
-        this.toFahrenheit();
+        if (!this.props.data && !this.props.dataC) return;
+        this.state.scale === 'C' ? this.toCelsius() : this.toFahrenheit();
     }
 
     render() {
         const data = this.state.data;
         const today = _.get(data, 'data', []).slice(0, 1);
-        // const today = _.get(data, 'data[0]', {});
-        // const todaysWeather = _.get(today, 'weather', {});
         const week = _.get(data, 'data', []).slice(1);
 
         return (
@@ -164,6 +163,7 @@ class App extends React.Component {
                                     icon={getIcon(data.weather.code)}
                                     sky={data.weather.description}
                                     wind={data.wind_spd}
+                                    units={this.state.units}
                                 />
                             ))}
                             <AppSwitcher

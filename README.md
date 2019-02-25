@@ -1,4 +1,4 @@
-# Weather App v0.1.5
+# Weather App v0.1.7
 
 > Simple weather app using [create-react-app] in [CodeSandbox].
 
@@ -9,8 +9,8 @@ Develop a weather application with the following specifications:
 -   [x] It should show the 5-day weather forecast for Dallas, TX.
 -   [x] Your application should utilize ReactJS (usage of boilerplates such as Create React App are
         encouraged).
--   [ ] You should be able to toggle between Fahrenheit and Celsius.
--   [ ] It should match the provided comp as closely as possible on desktop.
+-   [x] You should be able to toggle between Fahrenheit and Celsius.
+-   [x] It should match the provided comp as closely as possible on desktop.
 -   [ ] We do not provide a mobile mockup as you will determine how that functions on your own.
 -   [x] Icons should correspond to proper weather conditions.
 -   [ ] It should be responsive, rendering appropriately on tablet, and handheld form factors.
@@ -77,6 +77,25 @@ Reading the Api response and selecting the correct index from the next weekday w
 ```
 
 My thought was, _"Okay. Today is obviously going to be `api.data[0]`, so the next likely sequence would be `[1]`, `[2]`, `[3]`, and so on._ It didn't initially occur to me why a 5-day forecast's data child array would contain 39 entries _(haha, silly me...)_. The length comes due to the endpoint returning 3-hour intervals for daily weather. So, depending on the time you ping it'll return a different response length. So, to resolve this, I opted for using the same service's 16-day/daily forecast endpoint. Now each entry is a single day, therefore my `Week` can be structed like I had originally anticipated.
+
+Despite all this, I eventually refactored my `<AppDay />` component calls into a `.map` loop—which presents a cleaner source code:
+
+```js
+const data = this.state.data;
+const week = _.get(data, 'data', []).slice(1);
+
+<Week>
+    {week.map((data, i) => (
+        <AppDay
+            key={i}
+            day={data.valid_date}
+            degrees={data.temp}
+            icon={getIcon(data.weather.code)}
+            tooltip={data.valid_date}
+        />
+    ))}
+</Week>;
+```
 
 #### Limiting Api calls
 
@@ -170,13 +189,13 @@ const useWeatherState = createPersistedState('api');
 const [api, setData] = useWeatherState();
 
 // after celcius integration
-const useWeatherState = createPersistedState('apiF'),
+const useWeatherState = createPersistedState('api'),
     useWeatherStateC = createPersistedState('apiC');
-const [apiF, setDataF] = useWeatherState(),
+const [api, setDataF] = useWeatherState(),
     [apiC, setDataC] = useWeatherStateC();
 ```
 
-**Next**, I needed to find a way to swap between using `apiF` and `apiC` as dynamic parent objects to pass down the data. My first try revolved around setting up a conditional check and a two mutable `let` declarations:
+**Next**, I needed to find a way to swap between using `api` and `apiC` as dynamic parent objects to pass down the data. My first try revolved around setting up a conditional check and a two mutable `let` declarations:
 
 ```js
 let api;
@@ -197,7 +216,34 @@ let state = {
 };
 ```
 
-This worked on page refresh, however it did not dynamically through a `handleDegreesChange(event)` function.
+This worked on page refresh, however it did not dynamically through a `handleDegreesChange(event)` function. Therefore, I needed to take a different approach. I recalled the section from the React docs on [Lifting State Up](https://reactjs.org/docs/lifting-state-up.html), which presents the idea of sharing state, _"...by moving it up to the closest common ancestor of the components that need it."_ This also lit my brain lightbulb to realize I needed to be using `setState` in this scenario to swap the root data _the React way_ instead of my silly `let` conditional. You'd think this would all be ovbious—however, I am a novice in React; having spent the entire time of my last enterprise app development in a Vue environment.
+
+So, let's take a look at how I refactored to using `setState`.
+
+```js
+// index.js
+import AppRoot from './App';
+function App() {
+    // omitted...
+    return <AppRoot data={api} dataC={apiC} />;
+}
+```
+
+CodeSandbox's create-react-app boilerplate sets up a root function declaration for our project, aptly titled `function App()`. My project's source-of-truth parent component is imported as `AppRoot` and then returned with two prop attributes: `data` (for our base/Fahrenheit api data) and `dataC` for our metric Celcius api data. So we pass those on down into our `App.jsx` component:
+
+```js
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: '',
+            scale: localStorage.getItem('degrees'),
+            units: ''
+        };
+    }
+// ...
+```
 
 <!-- LINKS -->
 

@@ -105,7 +105,7 @@ class TodaysWeatherConditions extends React.Component {
                 <Conditions>
                     <SkyConditions>{this.props.sky}</SkyConditions>
                     <WindConditions>
-                        {Math.round(this.props.wind)} mph
+                        {Math.round(this.props.wind)} {this.props.units}
                     </WindConditions>
                 </Conditions>
             </Wrapper>

@@ -1,6 +1,6 @@
 /**
  * @module AppSwitcher
- * @version 0.2.7
+ * @version 0.2.8
  */
 
 import React from 'react';
@@ -93,6 +93,10 @@ class AppSwitcher extends React.Component {
         this.setState({
             selectedValue: 'F'
         });
+    }
+
+    componentDidMount() {
+        if (!this.props.selectedValue) this.setFar();
     }
 
     render() {
