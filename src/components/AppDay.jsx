@@ -4,7 +4,7 @@
  * conditions, and the temperature from the api call.
  *
  * @module AppDay
- * @version 0.1.4
+ * @version 0.1.6
  * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
  */
 
@@ -18,47 +18,106 @@ const Article = styled.article`
     background: white;
     color: var(--color-black);
     margin: 0;
-    padding: 1em 2em;
+    padding: 0.25em;
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     text-align: center;
     position: relative;
 
     & + article {
-        border-left: 1px solid #d8d8d8;
-    }
-
-    &:first-child {
-        border-bottom-left-radius: 3px;
+        border-top: 1px solid #d8d8d8;
     }
 
     &:last-child {
+        border-bottom-left-radius: 3px;
         border-bottom-right-radius: 3px;
     }
 
-    & .icon svg {
-        width: 45px;
-        height: 45px;
+    .icon {
+        --icon-size: 30px;
+        display: none;
+        width: var(--icon-size);
+        height: var(--icon-size);
+
+        svg {
+            width: var(--icon-size);
+            height: var(--icon-size);
+        }
+    }
+
+    @media (min-width: 320px) {
+        flex-flow: column nowrap;
+        justify-content: center;
+        padding: 0.5em 1em;
+
+        &:first-child {
+            border-bottom-left-radius: 3px;
+        }
+
+        &:last-child {
+            border-bottom-left-radius: 0;
+        }
+
+        .icon {
+            display: block;
+        }
+
+        & + article {
+            border-top: 0;
+            border-left: 1px solid #d8d8d8;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        padding: 1em 2em;
+
+        .icon {
+            width: calc(var(--icon-size) + 15px);
+            height: calc(var(--icon-size) + 15px);
+
+            svg {
+                width: calc(var(--icon-size) + 15px);
+                height: calc(var(--icon-size) + 15px);
+            }
+        }
     }
 `;
 
 const Header = styled.header`
-    font-size: 1em;
+    font-size: 0.625em;
     line-height: 1;
-    margin-bottom: 0.625em;
     font-weight: 700;
     text-transform: capitalize;
+
+    @media (min-width: 320px) {
+        font-size: 0.875em;
+        margin-bottom: 0.25em;
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 1em;
+        margin-bottom: 0.625em;
+    }
 `;
 
 const Footer = styled.footer`
-    font-size: 1.625em;
+    font-size: 0.875em;
     line-height: 1;
     font-weight: 400;
-    margin-top: 0.425em;
     position: relative;
-    left: 4px;
+    left: 1px;
+
+    @media (min-width: 320px) {
+        font-size: 1.25em;
+        margin-top: 0.25em;
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 1.625em;
+        margin-top: 0.425em;
+    }
 `;
 
 class AppDay extends React.Component {

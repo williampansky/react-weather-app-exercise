@@ -1,6 +1,6 @@
 /**
  * @module AppLocation
- * @version 0.1.7
+ * @version 0.1.8
  */
 
 import React from 'react';
@@ -9,22 +9,35 @@ import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
 
 const Wrapper = styled.div`
+    align-items: center;
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
     justify-content: center;
 
-    & .icon svg {
-        width: 1.875em;
-        height: 1.465em;
+    .icon {
+        display: none;
+        svg {
+            width: 1.875em;
+            height: 1.465em;
+        }
+    }
+
+    @media (min-width: 425px) {
+        .icon {
+            display: block;
+        }
     }
 `;
 
 const CityState = styled.h1`
-    margin: 0 0.35em 0.25em 0.15em;
-    font-size: 1.875em;
-    line-height: 1;
+    font-size: 1.275em;
     font-weight: 600;
+    line-height: 1;
+    margin: 0 0.35em 0.25em 0.15em;
+
+    @media (min-width: 425px) {
+        font-size: 1.875em;
+    }
 `;
 
 class AppLocation extends React.Component {

@@ -1,3 +1,8 @@
+/**
+ * @module AppLabel
+ * @version 0.1.1
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 

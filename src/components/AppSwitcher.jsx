@@ -1,56 +1,56 @@
 /**
  * @module AppSwitcher
- * @version 0.2.3
+ * @version 0.2.7
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const SwitcherForm = styled.form`
-    width: 55px;
-    height: 25px;
-    border-radius: 12.5px;
-    padding: 0 2px;
+    align-items: center;
     background-color: #2685bd;
+    border-radius: 12.5px;
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    height: 25px;
     justify-content: space-between;
+    padding: 0 2px;
+    width: 55px;
 `;
 
 const Item = styled.div`
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    width: 21px;
-    height: 21px;
-    padding: 0;
-    color: ${props => (props.selectedValue ? '#2685bd' : '#fff')};
+    align-items: center;
     background: ${props => (props.selectedValue ? '#2685bd' : 'transparent')};
     border-radius: 50%;
     border: 0;
-
-    font-weight: 600;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
+    color: ${props => (props.selectedValue ? '#2685bd' : '#fff')};
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 600;
+    height: 21px;
     justify-content: center;
+    letter-spacing: normal;
+    line-height: normal;
+    padding: 0;
     position: relative;
+    text-align: center;
+    width: 21px;
 
     & label {
         cursor: pointer;
+        left: -1px;
         padding: 4px 8px;
         position: relative;
-        left: -1px;
     }
 
     & input {
-        display: none;
         appearance: none;
+        display: none;
     }
 
     & input:focus {
@@ -58,34 +58,40 @@ const Item = styled.div`
     }
 
     &.active {
-        color: #2685bd;
         background-color: #fff;
+        color: #2685bd;
     }
 
     &:before {
         content: '°';
-        position: absolute;
-        top: 0;
-        right: 4px;
         font-size: 0.675em;
+        position: absolute;
+        right: 4px;
+        top: 0;
     }
 `;
 
 class AppSwitcher extends React.Component {
-    state = {
-        selectedValue: 'F'
-    };
+    constructor(props) {
+        super(props);
 
-    handleChange = event => {
+        this.state = {
+            selectedValue: this.props.selectedValue
+        };
+
+        this.setCel = this.setCel.bind(this);
+        this.setFar = this.setFar.bind(this);
+    }
+
+    setCel() {
         this.setState({
-            ...this.state,
-            selectedValue: event.target.value
+            selectedValue: 'C'
         });
-    };
+    }
 
-    change(event) {
+    setFar() {
         this.setState({
-            [event.target.name]: event.target.value
+            selectedValue: 'F'
         });
     }
 
@@ -102,7 +108,8 @@ class AppSwitcher extends React.Component {
                             name="radio"
                             value="C"
                             tabIndex="0"
-                            onChange={this.handleChange}
+                            onChange={this.props.onDegreesChange}
+                            onClick={this.setCel}
                         />
                         C
                     </label>
@@ -117,8 +124,8 @@ class AppSwitcher extends React.Component {
                             name="radio"
                             value="F"
                             tabIndex="0"
-                            defaultChecked
-                            onChange={this.handleChange}
+                            onChange={this.props.onDegreesChange}
+                            onClick={this.setFar}
                         />
                         F
                     </label>
@@ -127,5 +134,11 @@ class AppSwitcher extends React.Component {
         );
     }
 }
+
+AppSwitcher.propTypes = {
+    active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+    onDegreesChange: PropTypes.func,
+    selectedValue: PropTypes.string
+};
 
 export default AppSwitcher;

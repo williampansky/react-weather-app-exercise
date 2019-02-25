@@ -1,6 +1,6 @@
 /**
  * @module AppToday
- * @version 0.1.2
+ * @version 0.1.3
  * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
  */
 
@@ -12,10 +12,10 @@ const Wrapper = styled.div``;
 
 const Date = styled.time`
     display: block;
-    margin: 0;
-    font-weight: normal;
     font-size: 1em;
+    font-weight: normal;
     line-height: 1;
+    margin: 0;
 `;
 
 class AppToday extends React.Component {

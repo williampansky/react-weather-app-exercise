@@ -12,7 +12,7 @@ const api = {
     city: 'Dallas,TX',
     lat: '32.7766642',
     lon: '-96.7969879',
-    days: 7
+    days: 6
 };
 
 export default axios.create({
@@ -25,7 +25,6 @@ export default axios.create({
         city: api.city,
         // lat: api.lat,
         // lon: api.lon,
-        units: 'I',
         days: api.days
     }
 });

@@ -1,6 +1,6 @@
 /**
  * @module TodaysWeather
- * @version 0.1.3
+ * @version 0.1.4
  */
 
 import React from 'react';
@@ -12,20 +12,33 @@ const component = {
 };
 
 const Wrapper = styled.div`
-    display: flex;
-    flex-flow: row nowrap;
     align-items: center;
+    display: flex;
+    flex-flow: row wrap;
     justify-content: flex-start;
+    margin-right: ${component.margin};
 
-    & .icon {
-        position: relative;
-        top: 5px;
-        left: -4px;
+    .icon {
+        display: none;
+
+        svg {
+            height: 46px;
+            width: 46px;
+        }
     }
 
-    & .icon svg {
-        width: 46px;
-        height: 46px;
+    @media (min-width: 320px) {
+        .icon {
+            display: block;
+            left: -8px;
+            position: relative;
+            top: 5px;
+        }
+    }
+
+    @media (min-width: 425px) {
+        flex-flow: row nowrap;
+        left: -4px;
     }
 `;
 
@@ -33,14 +46,14 @@ const Degrees = styled.div`
     color: var(--color-primary);
     display: block;
     font-size: 48px;
-    font-weight: normal;
-    font-style: normal;
     font-stretch: normal;
-    line-height: normal;
+    font-style: normal;
+    font-weight: normal;
     letter-spacing: normal;
-    text-align: center;
-    margin-right: ${component.margin};
     line-height: 1;
+    line-height: normal;
+    margin-right: ${component.margin};
+    text-align: center;
 `;
 
 const DegreesIcon = styled.sup`
@@ -50,13 +63,17 @@ const DegreesIcon = styled.sup`
 `;
 
 const Conditions = styled.div`
+    align-items: flex-start;
     color: var(--color-primary);
     display: flex;
     flex-flow: column nowrap;
-    align-items: flex-start;
-    margin-left: calc(${component.margin} - 4px);
     font-size: 14px;
     font-weight: 600;
+    white-space: nowrap;
+
+    @media (min-width: 425px) {
+        margin-left: calc(${component.margin} - 4px);
+    }
 `;
 
 const SkyConditions = styled.span`
@@ -73,6 +90,10 @@ const WindConditions = styled.span`
 `;
 
 class TodaysWeatherConditions extends React.Component {
+    componentDidMount() {
+        // console.log(this.props.data);
+    }
+
     render() {
         return (
             <Wrapper>

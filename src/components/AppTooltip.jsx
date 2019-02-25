@@ -1,3 +1,8 @@
+/**
+ * @module AppTooltip
+ * @version 0.1.2
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 
