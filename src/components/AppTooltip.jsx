@@ -1,6 +1,7 @@
 /**
  * @module AppTooltip
- * @version 0.1.2
+ * @version 0.1.4
+ * @since 0.1.3 - Can use single props.text or multi line props
  */
 
 import React from 'react';
@@ -22,14 +23,20 @@ const Wrapper = styled.div`
     position: absolute;
     text-align: center;
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
-    top: -15px;
+    top: -30px;
     z-index: 1030;
     transform-origin: 50% 100%;
 `;
 
 class AppTooltip extends React.Component {
     render() {
-        return <Wrapper className="tooltip">{this.props.text}</Wrapper>;
+        return (
+            <Wrapper className="tooltip">
+                <div>{this.props.text}</div>
+                <div>{this.props.date}</div>
+                <div>{this.props.conditions}</div>
+            </Wrapper>
+        );
     }
 }
 

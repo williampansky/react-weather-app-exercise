@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Api from './api';
 import AppRoot from './App';
+import { format, getTime } from 'date-fns';
 import './styles/styles.css';
 import './styles/animation.css';
+import './styles/stars.css';
 import { differenceInMinutes } from 'date-fns';
 import createPersistedState from 'use-persisted-state';
 
@@ -68,7 +70,10 @@ function App() {
         if (refreshApi() === true) fetchData();
     }, []);
 
-    return <AppRoot data={api} dataC={apiC} />;
+    const Timestamp = new Date();
+    const humanReadable = Timestamp.toLocaleString();
+
+    return <AppRoot data={api} dataC={apiC} time={humanReadable} />;
 }
 
 const rootElement = document.getElementById('root');

@@ -28,7 +28,6 @@ body {
     width: 100vw;
     overflow: hidden;
     padding: 0;
-    background-image: linear-gradient(50deg, #115da3, #4ecfed);
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -36,6 +35,7 @@ body {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
+/* background-image: linear-gradient(50deg, #115da3, #4ecfed); */
 
 .icon svg {
     width: 20px;
@@ -55,5 +55,112 @@ body {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* Zeplin.io Mockup Background */
+.background.default {
+    background-image: linear-gradient(50deg, #115da3, #4ecfed);
+}
+
+/* https://codepen.io/Gerwinnz/pen/RVzrRG */
+.background.morning {
+    background: linear-gradient(
+        50deg,
+        #82a0bc 0%,
+        #aebebe 50%,
+        #e0ceb0 80%,
+        #ffc19c 100%
+    );
+}
+
+/* Eternal Constance */
+/* https://webgradients.com/ */
+.background.night {
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+}
+
+#canvas {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.drop {
+    background: -webkit-gradient(
+        linear,
+        0%,
+        0%,
+        0% 100%,
+        from(rgba(13, 52, 58, 1)),
+        to(rgba(255, 255, 255, 0.6))
+    );
+    background: -moz-linear-gradient(
+        top,
+        rgba(13, 52, 58, 1) 0%,
+        rgba(255, 255, 255, 0.6) 100%
+    );
+    background: linear-gradient(
+        top,
+        rgba(13, 52, 58, 1) 0%,
+        rgba(255, 255, 255, 0.6) 100%
+    );
+    background: #eee;
+    width: 1px;
+    height: 89px;
+    position: absolute;
+    bottom: 200px;
+    animation: fall 0.54s linear infinite;
+}
+
+@keyframes fall {
+    to {
+        margin-top: 900px;
+    }
+}
+
+.thunder {
+    pointer-events: none;
+    animation: thunder-bg 8s infinite;
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+
+.thunder.true {
+    opacity: 1;
+}
+
+@keyframes thunder-bg {
+    0% {
+        background-color: #1f1f33;
+    }
+    9% {
+        background-color: #1f1f33;
+    }
+    10% {
+        background-color: #484877;
+    }
+    10.5% {
+        background-color: #1f1f33;
+    }
+    80% {
+        background-color: #1f1f33;
+    }
+    82% {
+        background-color: #484877;
+    }
+    83% {
+        background-color: #1f1f33;
+    }
+    83.5% {
+        background-color: #484877;
+    }
+    100% {
+        background-color: #1f1f33;
     }
 }

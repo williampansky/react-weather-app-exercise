@@ -33,12 +33,12 @@ class AppIcon extends React.Component {
             <Icon className="icon">
                 <SVG
                     className={this.state.loaded ? 'uk-animation-fade' : ''}
-                    // cacheGetRequests
+                    cacheGetRequests
                     preloader={<LoaderIcon />}
                     onLoad={src => {
-                        this.onLoadHandler(this.props.src);
+                        this.onLoadHandler('media/' + this.props.src + '.svg');
                     }}
-                    src={this.props.src}
+                    src={'media/' + this.props.src + '.svg'}
                 />
             </Icon>
         );

@@ -1,11 +1,13 @@
 /**
  * @module TodaysWeather
  * @version 0.1.6
+ * @see [CSSTransition]{@link http://reactcommunity.org/react-transition-group}
  */
 
 import React from 'react';
 import styled from 'styled-components';
 import CountUp from 'react-countup';
+import { timeOfDayIcon } from '../utils/timeOfDayIcon';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AppIcon from '../components/AppIcon';
 
@@ -162,7 +164,7 @@ class TodaysWeatherConditions extends React.Component {
                 </CSSTransition>
                 <AppIcon
                     className="uk-animation-fade"
-                    src={'media/' + this.props.icon + '.svg'}
+                    src={timeOfDayIcon(this.props.icon, this.props.time)}
                 />
                 <Conditions>
                     <SkyConditions>{this.props.sky}</SkyConditions>

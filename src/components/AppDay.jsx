@@ -4,7 +4,7 @@
  * conditions, and the temperature from the api call.
  *
  * @module AppDay
- * @version 0.1.7
+ * @version 0.1.8
  * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
  */
 
@@ -12,6 +12,7 @@ import React from 'react';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
 import AppTooltip from '../components/AppTooltip';
+import { timeOfDayIcon } from '../utils/timeOfDayIcon';
 import CountUp from 'react-countup';
 import { format } from 'date-fns';
 
@@ -75,12 +76,12 @@ const Article = styled.article`
         padding: 1em 2em;
 
         .icon {
-            width: calc(var(--icon-size) + 15px);
-            height: calc(var(--icon-size) + 15px);
+            width: calc(var(--icon-size) + 10px);
+            height: calc(var(--icon-size) + 10px);
 
             svg {
-                width: calc(var(--icon-size) + 15px);
-                height: calc(var(--icon-size) + 15px);
+                width: calc(var(--icon-size) + 10px);
+                height: calc(var(--icon-size) + 10px);
             }
         }
     }
@@ -147,9 +148,14 @@ class AppDay extends React.Component {
                 className={active}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}>
-                <AppTooltip text={format(this.props.day, 'DD/MM/YYYY')} />
+                <AppTooltip
+                    conditions={this.props.conditions}
+                    date={format(this.props.day, 'DD/MM/YYYY')}
+                />
                 <Header>{format(this.props.day, 'ddd')}</Header>
-                <AppIcon src={'media/' + this.props.icon + '.svg'} />
+                <AppIcon
+                    src={timeOfDayIcon(this.props.icon, this.props.time)}
+                />
                 <Footer>
                     <CountUp
                         start={Math.round(

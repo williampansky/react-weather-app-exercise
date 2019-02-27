@@ -34,6 +34,7 @@ const CityState = styled.h1`
     font-weight: 600;
     line-height: 1;
     margin: 0 0.35em 0.25em 0.15em;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
 
     @media (min-width: 425px) {
         font-size: 1.875em;
@@ -44,7 +45,7 @@ class AppLocation extends React.Component {
     render() {
         return (
             <Wrapper>
-                <AppIcon src="media/location.svg" />
+                <AppIcon src="location" />
                 <CityState>
                     {this.props.city ? this.props.city : 'Unknown'},{' '}
                     {this.props.state ? this.props.state : 'N/A'}
