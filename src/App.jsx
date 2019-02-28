@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.3.2
+ * @version 0.3.3
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -13,6 +13,7 @@ import AppLocation from './components/AppLocation';
 import AppSwitcher from './components/AppSwitcher';
 import AppToday from './components/AppToday';
 import DebugBar from './components/DebugBar';
+import { Stars } from './vendor/stars';
 import { Weather } from './vendor/weather';
 import SVG from 'react-inlinesvg';
 import TodaysWeather from './components/TodaysWeather';
@@ -152,7 +153,7 @@ const Cloud = styled.div`
     }
 
     &.evening {
-        filter: blur(10px);
+        filter: blur(25px);
         opacity: 0.425;
         z-index: -1;
 
@@ -198,13 +199,15 @@ class App extends React.Component {
             background: '',
             clouds: false,
             data: '',
+            fog: true,
             rain: false,
             scale: localStorage.getItem('degrees'),
-            time: '',
-            thunder: false,
+            stars: true,
             snow: false,
-            wind: false,
-            units: ''
+            thunder: false,
+            time: '',
+            units: '',
+            wind: false
         };
 
         this.toCelsius = this.toCelsius.bind(this);
@@ -259,8 +262,18 @@ class App extends React.Component {
     };
 
     setClouds(bool) {
-        Weather(bool, this.state.thunder, this.state.rain, null, null);
+        Weather(
+            bool,
+            this.state.thunder,
+            this.state.rain,
+            this.state.snow,
+            this.state.wind
+        );
         this.setState({ clouds: bool });
+    }
+
+    setFog(bool) {
+        this.setState({ fog: bool });
     }
 
     setThunder(bool) {
@@ -285,6 +298,12 @@ class App extends React.Component {
             this.state.wind
         );
         this.setState({ rain: bool });
+    }
+
+    setStars(bool) {
+        if (bool) Stars(bool);
+        else Stars();
+        this.setState({ stars: bool ? true : false });
     }
 
     setSnow(bool) {
@@ -328,6 +347,9 @@ class App extends React.Component {
                 this.setStateTime('evening');
                 this.setBackground('night');
                 break;
+            case 'fog':
+                this.state.fog ? this.setFog(false) : this.setFog(true);
+                break;
             case 'clouds':
                 this.state.clouds
                     ? this.setClouds(false)
@@ -341,6 +363,9 @@ class App extends React.Component {
                     ? this.setThunder(false)
                     : this.setThunder(true);
                 break;
+            case 'stars':
+                this.state.stars ? this.setStars(false) : this.setStars();
+                break;
             case 'snow':
                 this.state.snow ? this.setSnow(false) : this.setSnow(true);
                 break;
@@ -353,13 +378,15 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        this.setStateTime(this.getTimeOfDay());
         if (!this.props.data && !this.props.dataC) return;
+        this.setStateTime(this.getTimeOfDay());
         this.state.scale === 'C' ? this.toCelsius() : this.toFahrenheit();
 
         if (this.state.clouds) this.setClouds(true);
+        if (this.state.fog) this.setFog(true);
         if (this.state.rain) this.setRain(true);
         if (this.state.thunder) this.setThunder(true);
+        if (this.state.stars) this.setStars();
         if (this.state.snow) this.setSnow(true);
         if (this.state.wind) this.setWind(true);
 
@@ -388,15 +415,19 @@ class App extends React.Component {
             <Background className={'background ' + this.state.background}>
                 <DebugBar
                     clouds={this.state.clouds}
+                    fog={this.state.fog}
                     rain={this.state.rain}
                     time={this.state.time}
                     thunder={this.state.thunder}
+                    stars={this.state.stars}
                     snow={this.state.snow}
                     wind={this.state.wind}
                     onSetDebugState={this.setFauxState}
                 />
                 <div className={'stars ' + this.state.time} />
+                <div id="fog" className={this.state.fog ? 'active' : ''} />
                 <canvas id="canvas" />
+                <canvas id="stars" />
                 <Main>
                     <Cloud className={'left ' + this.state.time}>
                         <SVG cacheGetRequests src="media/cloud-01.svg" />

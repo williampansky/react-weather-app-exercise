@@ -150,7 +150,7 @@ class AppDay extends React.Component {
                 onMouseLeave={handleMouseLeave}>
                 <AppTooltip
                     conditions={this.props.conditions}
-                    date={format(this.props.day, 'DD/MM/YYYY')}
+                    // date={format(this.props.day, 'DD/MM/YYYY')}
                 />
                 <Header>{format(this.props.day, 'ddd')}</Header>
                 <AppIcon

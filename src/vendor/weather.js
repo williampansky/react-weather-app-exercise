@@ -37,15 +37,9 @@ export const Weather = (
 
     var spawnedClouds = false;
     var windSpeed = 30;
-    var windDirection = 120;
-    var temp = 0;
-    var state = 'day';
 
     // rain
     var rainColor = 'rgba(255, 255, 255, 0.875)';
-
-    // snow
-    var snowColor = '';
 
     /*
 |
@@ -95,23 +89,6 @@ export const Weather = (
 | Weather control methods
 |
 */
-    var updateConditions = function(event) {
-        var input = event.target;
-        var name = input.name;
-        var type = input.type;
-
-        if (type === 'radio') {
-            if (name === 'time_of_day') {
-                canvas.className = input.value;
-            }
-        }
-
-        if (type === 'checkbox') {
-            condition[name] = input.checked;
-            setConditionReady();
-        }
-    };
-
     var setConditionReady = function() {
         // stop spawning
         Pause();
@@ -267,19 +244,19 @@ export const Weather = (
             this.img.height
         );
 
-        if (this.xVelocity > 0) {
-            // >>>
-            if (this.x > canvas.width) {
-                this.xVelocity = (windSpeed - randomRange(0, 10)) / 60;
-                this.x = 0 - this.width;
-            }
-        } else {
-            // <<<
-            if (this.x < 0 - this.width) {
-                this.xVelocity = (windSpeed - randomRange(0, 10)) / 60;
-                this.x = canvas.width;
-            }
-        }
+        // if (this.xVelocity > 0) {
+        //     // >>>
+        //     if (this.x > canvas.width) {
+        //         this.xVelocity = (windSpeed - randomRange(0, 10)) / 60;
+        //         this.x = 0 - this.width;
+        //     }
+        // } else {
+        //     // <<<
+        //     if (this.x < 0 - this.width) {
+        //         this.xVelocity = (windSpeed - randomRange(0, 10)) / 60;
+        //         this.x = canvas.width;
+        //     }
+        // }
 
         return true;
     };
@@ -406,7 +383,7 @@ export const Weather = (
 */
     var blowingLeaf = function() {
         this.type = 'blowing_leaf';
-        this.width = randomRange(10, 20);
+        this.width = randomRange(5, 10);
         this.height = this.width * 2.24;
 
         this.xVelocity = (windSpeed - randomRange(0, 20)) / 6;

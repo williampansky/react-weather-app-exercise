@@ -72,13 +72,14 @@ const Button = styled.button`
     cursor: pointer;
     display: inline-block;
     font-family: 'Verdana', sans-serif;
-    font-size: 10px;
+    font-size: 8.875px;
     height: 20px;
+    letter-spacing: 0.0875em;
     line-height: 1;
     margin: 0;
     margin: 0;
     overflow: visible;
-    padding: 0 15px;
+    padding: 0 10px;
     text-align: center;
     text-decoration: none;
     text-transform: none;
@@ -98,7 +99,8 @@ const Button = styled.button`
     }
 
     &.active {
-        background-color: #32d296;
+        color: #fff;
+        background-color: #28a745;
     }
 `;
 
@@ -155,6 +157,13 @@ class DebugBar extends React.Component {
                 </FlexItem>
                 <FlexItem>
                     <Button
+                        value="fog"
+                        type="button"
+                        className={this.props.fog ? 'active' : ''}
+                        onClick={this.props.onSetDebugState}>
+                        Fog
+                    </Button>
+                    <Button
                         value="clouds"
                         type="button"
                         className={this.props.clouds ? 'active' : ''}
@@ -188,6 +197,13 @@ class DebugBar extends React.Component {
                         className={this.props.wind ? 'active' : ''}
                         onClick={this.props.onSetDebugState}>
                         Wind
+                    </Button>
+                    <Button
+                        value="stars"
+                        type="button"
+                        className={this.props.stars ? 'active' : ''}
+                        onClick={this.props.onSetDebugState}>
+                        Stars
                     </Button>
                 </FlexItem>
             </Bar>

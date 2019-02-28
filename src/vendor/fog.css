@@ -1,0 +1,52 @@
+/**
+ * forked via https://codepen.io/camstephensdomo/pen/PVqpaP
+ */
+#fog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#fog:before,
+#fog:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300%;
+    opacity: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+#fog.active:before {
+    background-image: url('media/fog-1.png');
+    animation: drift 60s linear 0s infinite;
+}
+
+#fog.active:after {
+    background-image: url('media/fog-2.png');
+    animation: drift 25s linear 0s infinite;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0;
+    }
+    100% {
+        transform: translate3d(-200vw, 0, 0);
+    }
+}

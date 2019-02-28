@@ -58,6 +58,10 @@ body {
     }
 }
 
+.background {
+    transition: background-image 600ms ease-in-out;
+}
+
 /* Zeplin.io Mockup Background */
 .background.default {
     background-image: linear-gradient(50deg, #115da3, #4ecfed);
@@ -80,7 +84,7 @@ body {
     background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
 }
 
-#canvas {
+canvas {
     pointer-events: none;
     position: absolute;
     width: 100%;
