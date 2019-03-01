@@ -4,7 +4,7 @@
  * conditions, and the temperature from the api call.
  *
  * @module AppDay
- * @version 0.1.8
+ * @version 0.2.1
  * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
  */
 
@@ -12,15 +12,16 @@ import React from 'react';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
 import AppTooltip from '../components/AppTooltip';
-import { timeOfDayIcon } from '../utils/timeOfDayIcon';
 import CountUp from 'react-countup';
 import { format } from 'date-fns';
+
+const maxWidth = '670px';
 
 const Article = styled.article`
     background: white;
     color: var(--color-black);
     margin: 0;
-    padding: 0.25em;
+    padding: 1.625vh 1.25em;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -39,17 +40,20 @@ const Article = styled.article`
 
     .icon {
         --icon-size: 30px;
-        display: none;
-        width: var(--icon-size);
+        width: 100%;
         height: var(--icon-size);
 
         svg {
-            width: var(--icon-size);
+            width: inheirt;
             height: var(--icon-size);
+        }
+
+        svg path {
+            fill: var(--color-primary);
         }
     }
 
-    @media (min-width: 320px) {
+    @media (min-width: ${maxWidth}) {
         flex-flow: column nowrap;
         justify-content: center;
         padding: 0.5em 1em;
@@ -60,10 +64,6 @@ const Article = styled.article`
 
         &:last-child {
             border-bottom-left-radius: 0;
-        }
-
-        .icon {
-            display: block;
         }
 
         & + article {
@@ -95,12 +95,38 @@ const Header = styled.header`
 
     @media (min-width: 320px) {
         font-size: 0.875em;
-        margin-bottom: 0.25em;
     }
 
     @media (min-width: 1024px) {
         font-size: 1em;
         margin-bottom: 0.625em;
+    }
+`;
+
+const Body = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+
+    .icon {
+        width: var(--icon-size);
+        @media (min-width: ${maxWidth}) {
+            width: 100%;
+        }
+    }
+
+    h2 {
+        font-size: 0.875em;
+        font-weight: 400;
+        margin: 0 0 0 0.25em;
+        line-height: 1;
+        white-space: nowrap;
+
+        @media (min-width: ${maxWidth}) {
+            display: none;
+        }
     }
 `;
 
@@ -113,7 +139,6 @@ const Footer = styled.footer`
 
     @media (min-width: 320px) {
         font-size: 1.25em;
-        margin-top: 0.25em;
     }
 
     @media (min-width: 1024px) {
@@ -153,9 +178,10 @@ class AppDay extends React.Component {
                     // date={format(this.props.day, 'DD/MM/YYYY')}
                 />
                 <Header>{format(this.props.day, 'ddd')}</Header>
-                <AppIcon
-                    src={timeOfDayIcon(this.props.icon, this.props.time)}
-                />
+                <Body>
+                    <AppIcon src={this.props.icon} />
+                    <h2>{this.props.conditions}</h2>
+                </Body>
                 <Footer>
                     <CountUp
                         start={Math.round(

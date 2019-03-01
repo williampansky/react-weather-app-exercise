@@ -30,7 +30,7 @@ class AppIcon extends React.Component {
     }
     render() {
         return (
-            <Icon className="icon">
+            <Icon className="icon" data-icon={this.props.src}>
                 <SVG
                     className={this.state.loaded ? 'uk-animation-fade' : ''}
                     cacheGetRequests

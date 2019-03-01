@@ -9,6 +9,8 @@
 
     --color-black: #4a4a4a;
     --color-gray: #999;
+
+    --color-graphic-bg: #d8faff;
 }
 
 *,
@@ -48,6 +50,11 @@ body {
     animation-timing-function: linear;
     display: block;
 }
+@media (max-width: 670px) {
+    .active .tooltip {
+        display: none;
+    }
+}
 
 @keyframes scaleUp {
     0% {
@@ -59,29 +66,32 @@ body {
 }
 
 .background {
+    background: var(--color-graphic-bg);
     transition: background-image 600ms ease-in-out;
 }
 
-/* Zeplin.io Mockup Background */
-.background.default {
-    background-image: linear-gradient(50deg, #115da3, #4ecfed);
-}
+@media (min-width: 670px) {
+    /* Zeplin.io Mockup Background */
+    .background.default {
+        background-image: linear-gradient(50deg, #115da3, #4ecfed);
+    }
 
-/* https://codepen.io/Gerwinnz/pen/RVzrRG */
-.background.morning {
-    background: linear-gradient(
-        50deg,
-        #82a0bc 0%,
-        #aebebe 50%,
-        #e0ceb0 80%,
-        #ffc19c 100%
-    );
-}
+    /* https://codepen.io/Gerwinnz/pen/RVzrRG */
+    .background.morning {
+        background: linear-gradient(
+            50deg,
+            #82a0bc 0%,
+            #aebebe 50%,
+            #e0ceb0 80%,
+            #ffc19c 100%
+        );
+    }
 
-/* Eternal Constance */
-/* https://webgradients.com/ */
-.background.night {
-    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+    /* Eternal Constance */
+    /* https://webgradients.com/ */
+    .background.night {
+        background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+    }
 }
 
 canvas {

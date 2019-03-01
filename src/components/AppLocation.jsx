@@ -8,33 +8,33 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
 
+const maxWidth = '670px';
+
 const Wrapper = styled.div`
     align-items: center;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
 
-    .icon {
-        display: none;
-        svg {
-            width: 1.875em;
-            height: 1.465em;
-        }
+    .icon svg {
+        width: 1.875em;
+        height: 1.465em;
     }
 
-    @media (min-width: 425px) {
-        .icon {
-            display: block;
+    .icon svg path {
+        fill: var(--color-black);
+        @media (min-width: ${maxWidth}) {
+            fill: white;
         }
     }
 `;
 
 const CityState = styled.h1`
+    color: inherit;
     font-size: 1.275em;
     font-weight: 600;
     line-height: 1;
     margin: 0 0.35em 0.25em 0.15em;
-    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
 
     @media (min-width: 425px) {
         font-size: 1.875em;

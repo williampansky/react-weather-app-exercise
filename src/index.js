@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import Api from './api';
-import AppRoot from './App';
-import { format, getTime } from 'date-fns';
 import './styles/styles.css';
 import './styles/animation.css';
 import './vendor/fog.css';
 import './styles/stars.css';
+import AppRoot from './App';
+import Api from './api';
 import { differenceInMinutes } from 'date-fns';
 import createPersistedState from 'use-persisted-state';
 

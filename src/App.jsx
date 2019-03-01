@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.3.3
+ * @version 0.3.5
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -13,13 +13,12 @@ import AppLocation from './components/AppLocation';
 import AppSwitcher from './components/AppSwitcher';
 import AppToday from './components/AppToday';
 import DebugBar from './components/DebugBar';
-import { Stars } from './vendor/stars';
-import { Weather } from './vendor/weather';
 import SVG from 'react-inlinesvg';
-import TodaysWeather from './components/TodaysWeather';
-import { matchIcon } from './utils/matchIcon';
+import { format } from 'date-fns';
 import { getIcon } from './utils/getIcon';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
+const maxWidth = '670px';
 
 const Background = styled.div`
     height: 100%;
@@ -50,16 +49,24 @@ const Main = styled.main`
     align-items: center;
     display: flex;
     flex-flow: column nowrap;
-    height: 92%;
-    justify-content: center;
+    justify-content: space-between;
+    height: 100%;
     margin: auto;
-    max-width: 670px;
+    max-width: ${maxWidth};
     position: relative;
-    width: 96%;
+    width: 100%;
     z-index: 1;
 
-    @media (min-width: 1024px) {
+    @media (min-width: ${maxWidth}) {
+        align-items: center;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        height: 92%;
         width: 100%;
+    }
+
+    @media (min-width: 1024px) {
     }
 `;
 
@@ -71,34 +78,56 @@ const Week = styled.section`
     grid-template-columns: repeat(1, 1fr);
     width: 100%;
 
-    @media (min-width: 320px) {
+    @media (min-width: ${maxWidth}) {
         grid-template-columns: repeat(5, 1fr);
     }
 `;
 
 const Location = styled.article`
     width: 100%;
+
+    @media (max-width: ${maxWidth}) {
+        height: 100%;
+        align-items: center;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+    }
 `;
 
 const Info = styled.header`
-    color: white;
-    margin: 0 auto 20px;
+    color: var(--color-black);
+    margin: 0 auto;
     padding: 1em;
     text-align: center;
     width: 100%;
+
+    @media (min-width: ${maxWidth}) {
+        color: white;
+        margin: 0 auto 20px;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+    }
+`;
+
+const DateToday = styled.time`
+    color: inherit;
+    display: block;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 1;
+    margin: 0;
 `;
 
 const TodaysWeatherAndControls = styled.div`
-    align-items: flex-start;
+    align-items: center;
     bottom: auto;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
+    flex-flow: column nowrap;
     left: 0;
     padding: 1em 1.5em;
     position: absolute;
     right: 0;
-    top: 0;
+    /top: -75px;
     z-index: 1;
 
     form {
@@ -116,16 +145,26 @@ const TodaysWeatherAndControls = styled.div`
             margin-top: 0;
         }
     }
+
+    @media (min-width: ${maxWidth}) {
+        align-items: flex-start;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        top: 0;
+    }
 `;
 
 const Graphic = styled.footer`
-    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
     display: none;
     position: relative;
     width: 100%;
 
     @media (min-height: 600px) {
         display: block;
+    }
+
+    @media (min-width: ${maxWidth}) {
+        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
     }
 `;
 
@@ -153,13 +192,7 @@ const Cloud = styled.div`
     }
 
     &.evening {
-        filter: blur(25px);
-        opacity: 0.425;
-        z-index: -1;
-
-        & svg path {
-            fill: #09203f;
-        }
+        display: none;
     }
 
     @media (min-width: 1024px) {
@@ -196,18 +229,12 @@ class App extends React.Component {
         super(props);
 
         this.state = {
+            fog: false,
             background: '',
-            clouds: false,
             data: '',
-            fog: true,
-            rain: false,
             scale: localStorage.getItem('degrees'),
-            stars: true,
-            snow: false,
-            thunder: false,
             time: '',
-            units: '',
-            wind: false
+            units: ''
         };
 
         this.toCelsius = this.toCelsius.bind(this);
@@ -253,79 +280,14 @@ class App extends React.Component {
         });
     }
 
-    setAppTheme() {}
-
     handleDegreesChange = event => {
         localStorage.setItem('degrees', event.target.value);
         this.setState({ scale: event.target.value });
         event.target.value === 'C' ? this.toCelsius() : this.toFahrenheit();
     };
 
-    setClouds(bool) {
-        Weather(
-            bool,
-            this.state.thunder,
-            this.state.rain,
-            this.state.snow,
-            this.state.wind
-        );
-        this.setState({ clouds: bool });
-    }
-
     setFog(bool) {
         this.setState({ fog: bool });
-    }
-
-    setThunder(bool) {
-        Weather(
-            this.state.clouds,
-            bool,
-            this.state.rain,
-            this.state.snow,
-            this.state.wind
-        );
-        this.setState({ thunder: bool });
-    }
-
-    setRain(bool) {
-        Weather(
-            this.state.clouds,
-            this.state.thunder,
-            bool,
-            this.state.snow,
-            this.state.wind,
-            this.state.snow,
-            this.state.wind
-        );
-        this.setState({ rain: bool });
-    }
-
-    setStars(bool) {
-        if (bool) Stars(bool);
-        else Stars();
-        this.setState({ stars: bool ? true : false });
-    }
-
-    setSnow(bool) {
-        Weather(
-            this.state.clouds,
-            this.state.thunder,
-            this.state.rain,
-            bool,
-            this.state.wind
-        );
-        this.setState({ snow: bool });
-    }
-
-    setWind(bool) {
-        Weather(
-            this.state.clouds,
-            this.state.thunder,
-            this.state.rain,
-            this.state.snow,
-            bool
-        );
-        this.setState({ wind: bool });
     }
 
     /**
@@ -350,28 +312,6 @@ class App extends React.Component {
             case 'fog':
                 this.state.fog ? this.setFog(false) : this.setFog(true);
                 break;
-            case 'clouds':
-                this.state.clouds
-                    ? this.setClouds(false)
-                    : this.setClouds(true);
-                break;
-            case 'rain':
-                this.state.rain ? this.setRain(false) : this.setRain(true);
-                break;
-            case 'thunder':
-                this.state.thunder
-                    ? this.setThunder(false)
-                    : this.setThunder(true);
-                break;
-            case 'stars':
-                this.state.stars ? this.setStars(false) : this.setStars();
-                break;
-            case 'snow':
-                this.state.snow ? this.setSnow(false) : this.setSnow(true);
-                break;
-            case 'wind':
-                this.state.wind ? this.setWind(false) : this.setWind(true);
-                break;
             default:
                 return;
         }
@@ -382,13 +322,7 @@ class App extends React.Component {
         this.setStateTime(this.getTimeOfDay());
         this.state.scale === 'C' ? this.toCelsius() : this.toFahrenheit();
 
-        if (this.state.clouds) this.setClouds(true);
         if (this.state.fog) this.setFog(true);
-        if (this.state.rain) this.setRain(true);
-        if (this.state.thunder) this.setThunder(true);
-        if (this.state.stars) this.setStars();
-        if (this.state.snow) this.setSnow(true);
-        if (this.state.wind) this.setWind(true);
 
         switch (this.getTimeOfDay()) {
             case 'morning':
@@ -414,20 +348,12 @@ class App extends React.Component {
         return (
             <Background className={'background ' + this.state.background}>
                 <DebugBar
-                    clouds={this.state.clouds}
                     fog={this.state.fog}
-                    rain={this.state.rain}
                     time={this.state.time}
-                    thunder={this.state.thunder}
-                    stars={this.state.stars}
-                    snow={this.state.snow}
-                    wind={this.state.wind}
                     onSetDebugState={this.setFauxState}
                 />
                 <div className={'stars ' + this.state.time} />
                 <div id="fog" className={this.state.fog ? 'active' : ''} />
-                <canvas id="canvas" />
-                <canvas id="stars" />
                 <Main>
                     <Cloud className={'left ' + this.state.time}>
                         <SVG cacheGetRequests src="media/cloud-01.svg" />
@@ -439,19 +365,23 @@ class App extends React.Component {
                                 state={data.state_code}
                             />
                             {today.map((data, i) => (
-                                <AppToday key={i} day={data.valid_date} />
+                                <DateToday key={i}>
+                                    {format(
+                                        data.valid_date,
+                                        'dddd, MMM D, YYYY'
+                                    )}
+                                </DateToday>
                             ))}
                         </Info>
                         <Graphic>
                             <TodaysWeatherAndControls>
                                 {today.map((data, i) => (
-                                    <TodaysWeather
+                                    <AppToday
                                         key={i}
                                         day={data.valid_date}
                                         degrees={data.temp}
                                         icon={getIcon(data.weather.code)}
                                         sky={data.weather.description}
-                                        time={this.state.time}
                                         wind={data.wind_spd}
                                         units={this.state.units}
                                     />

@@ -39,6 +39,7 @@ const FlexItem = styled.div`
 
 const Menu = styled.div`
     cursor: pointer;
+    display: none;
     height: auto;
     line-height: 1;
     padding: 10px 15px;
@@ -59,6 +60,10 @@ const Menu = styled.div`
 
     &.open svg path {
         opacity: 1;
+    }
+
+    @media (min-width: 768px) {
+        display: block;
     }
 `;
 
@@ -108,7 +113,7 @@ class DebugBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: true
+            open: false
         };
     }
 
@@ -119,6 +124,22 @@ class DebugBar extends React.Component {
     };
 
     render() {
+        const times = [
+            { name: 'Morning', value: 'morning' },
+            { name: 'Afternoon', value: 'afternoon' },
+            { name: 'Evening', value: 'evening' }
+        ];
+
+        const conditions = [
+            { name: 'Clouds', value: 'clouds', enabled: false },
+            { name: 'Fog', value: 'fog', enabled: true },
+            { name: 'Rain', value: 'rain', enabled: false },
+            { name: 'Snow', value: 'snow', enabled: false },
+            { name: 'Stars', value: 'stars', enabled: false },
+            { name: 'Thunder', value: 'thunder', enabled: false },
+            { name: 'Wind', value: 'wind', enabled: false }
+        ];
+
         return (
             <Bar className={this.state.open ? 'open' : ''}>
                 <Menu
@@ -127,84 +148,38 @@ class DebugBar extends React.Component {
                     <AppIcon src="umbrella" />
                 </Menu>
                 <FlexItem>
-                    <Button
-                        value="morning"
-                        type="button"
-                        className={
-                            this.props.time === 'morning' ? 'active' : ''
-                        }
-                        onClick={this.props.onSetDebugState}>
-                        Morning
-                    </Button>
-                    <Button
-                        value="afternoon"
-                        type="button"
-                        className={
-                            this.props.time === 'afternoon' ? 'active' : ''
-                        }
-                        onClick={this.props.onSetDebugState}>
-                        Afternoon
-                    </Button>
-                    <Button
-                        value="evening"
-                        type="button"
-                        className={
-                            this.props.time === 'evening' ? 'active' : ''
-                        }
-                        onClick={this.props.onSetDebugState}>
-                        Evening
-                    </Button>
+                    {times.map((item, idx) => (
+                        <Button
+                            key={idx}
+                            value={item.value}
+                            type="button"
+                            className={
+                                this.props.time === item.value ? 'active' : ''
+                            }
+                            onClick={this.props.onSetDebugState}>
+                            {item.name}
+                        </Button>
+                    ))}
                 </FlexItem>
                 <FlexItem>
-                    <Button
-                        value="fog"
-                        type="button"
-                        className={this.props.fog ? 'active' : ''}
-                        onClick={this.props.onSetDebugState}>
-                        Fog
-                    </Button>
-                    <Button
-                        value="clouds"
-                        type="button"
-                        className={this.props.clouds ? 'active' : ''}
-                        onClick={this.props.onSetDebugState}>
-                        Clouds
-                    </Button>
-                    <Button
-                        value="rain"
-                        type="button"
-                        className={this.props.rain ? 'active' : ''}
-                        onClick={this.props.onSetDebugState}>
-                        Rain
-                    </Button>
-                    <Button
-                        value="thunder"
-                        type="button"
-                        className={this.props.thunder ? 'active' : ''}
-                        onClick={this.props.onSetDebugState}>
-                        Thunder
-                    </Button>
-                    <Button
-                        value="snow"
-                        type="button"
-                        className={this.props.snow ? 'active' : ''}
-                        onClick={this.props.onSetDebugState}>
-                        Snow
-                    </Button>
-                    <Button
-                        value="wind"
-                        type="button"
-                        className={this.props.wind ? 'active' : ''}
-                        onClick={this.props.onSetDebugState}>
-                        Wind
-                    </Button>
-                    <Button
-                        value="stars"
-                        type="button"
-                        className={this.props.stars ? 'active' : ''}
-                        onClick={this.props.onSetDebugState}>
-                        Stars
-                    </Button>
+                    {conditions
+                        .filter(item => {
+                            return item.enabled;
+                        })
+                        .map((item, idx) => (
+                            <Button
+                                key={idx}
+                                value={item.value}
+                                type="button"
+                                className={
+                                    this.props.time === item.value
+                                        ? 'active'
+                                        : ''
+                                }
+                                onClick={this.props.onSetDebugState}>
+                                {item.name}
+                            </Button>
+                        ))}
                 </FlexItem>
             </Bar>
         );

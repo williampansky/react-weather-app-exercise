@@ -19,7 +19,7 @@ export const getIcon = code => {
         cloudLightning: 'cloud-lightning',
         cloudRain: 'cloud-rain',
         cloudSnow: 'cloud-snow',
-        cloud: 'cloud',
+        cloud: 'cloud-sun',
         sun: 'sun'
     };
 
