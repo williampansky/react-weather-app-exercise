@@ -1,11 +1,13 @@
 /**
  * @module AppSwitcher
- * @version 0.2.8
+ * @version 0.2.9
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+const maxWidth = '670px';
 
 const SwitcherForm = styled.form`
     align-items: center;
@@ -17,6 +19,10 @@ const SwitcherForm = styled.form`
     justify-content: space-between;
     padding: 0 2px;
     width: 55px;
+
+    @media (max-height: 560px) and (max-width: ${maxWidth}) {
+        display: none;
+    }
 `;
 
 const Item = styled.div`

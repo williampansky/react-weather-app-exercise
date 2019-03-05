@@ -1,59 +1,74 @@
 /**
  * @module AppGraphic
- * @version 0.1.3
+ * @version 0.1.7
  */
 
 import React from 'react';
 import styled from 'styled-components';
-
-const maxWidth = '670px';
+import { breakpoints } from '../static/breakpoints';
 
 const Wrapper = styled.section`
-    width: 100%;
-    min-height: 300px;
     height: 100%;
     overflow: hidden;
+    width: 100%;
+    display: none;
+    background-color: var(--color-graphic-bg);
+    width: 670px;
+    height: 368px;
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-height: 560px) {
+        display: block;
+    }
+
+    @media (min-width: ${breakpoints.minrange}px) {
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         max-height: 368px;
+        min-height: 300px;
     }
 `;
 
 const Image = styled.img`
-    object-fit: cover;
-    width: 200vw;
     height: auto;
-    vertical-align: bottom;
+    object-fit: cover;
     transform: translateX(-50vw);
+    vertical-align: bottom;
+    width: 200vw;
+    transition: transform, width 300ms ease-in-out;
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-width: 400px) {
+        transform: translateX(-40vw);
+        width: 170vw;
+    }
+
+    @media (min-width: 500px) {
+        transform: translateX(-20vw);
+        width: 145vw;
+    }
+
+    @media (min-width: ${breakpoints.minrange}px) {
         object-fit: contain;
+        transform: translateX(0);
+        width: 100%;
     }
 `;
 
 class AppGraphic extends React.Component {
     render() {
         return (
-            <Wrapper>
+            <Wrapper className="uk-animation-fade">
                 <picture>
                     <source
-                    // type="image/jpeg"
-                    // srcSet="media/dallas.jpg"
-                    // media="(min-width: 320px)"
+                        type="image/jpeg"
+                        srcSet="media/dallas@3x.jpg"
+                        media="(min-width: 670px)"
                     />
                     <source
-                    // type="image/jpeg"
-                    // srcSet="media/dallas@2x.jpg"
-                    // media="(min-width: 768px)"
+                        type="image/jpeg"
+                        srcSet="media/dallas@2x.jpg"
+                        media="(min-width: 411px)"
                     />
-                    <source
-                    // type="image/jpeg"
-                    // srcSet="media/dallas@3x.jpg"
-                    // media="(min-width: 1024px)"
-                    />
-                    <Image alt="" src="media/dallas@3x.jpg" />
+                    <Image alt="" src="media/dallas.jpg" />
                 </picture>
             </Wrapper>
         );

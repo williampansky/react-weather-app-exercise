@@ -1,6 +1,6 @@
 /**
  * @module AppToday
- * @version 0.1.6
+ * @version 0.1.8
  * @see [CSSTransition]{@link http://reactcommunity.org/react-transition-group}
  */
 
@@ -9,8 +9,8 @@ import styled from 'styled-components';
 import CountUp from 'react-countup';
 import AppIcon from '../components/AppIcon';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { breakpoints } from '../static/breakpoints';
 
-const maxWidth = '670px';
 const component = {
     margin: '12px'
 };
@@ -22,17 +22,22 @@ const Wrapper = styled.div`
     justify-content: flex-start;
     margin-bottom: ${component.margin};
 
-    .icon svg {
-        height: 46px;
-        width: 46px;
-    }
+    .icon {
+        left: -8px;
+        position: relative;
+        top: 2px;
 
-    @media (min-width: 320px) {
-        .icon {
-            display: block;
-            left: -8px;
-            position: relative;
-            top: 2px;
+        svg {
+            height: 46px;
+            width: 46px;
+        }
+
+        &[data-icon='cloud-lightning'] {
+            top: 6px;
+        }
+
+        &[data-icon='cloud-rain'] {
+            top: 4px;
         }
     }
 
@@ -41,7 +46,7 @@ const Wrapper = styled.div`
         left: -4px;
     }
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-width: ${breakpoints.mindrange}) {
         margin-bottom: 0;
         margin-right: ${component.margin};
     }
@@ -63,6 +68,7 @@ const Degrees = styled.div`
 
 const DegreesIcon = styled.sup`
     font-size: 0.675em;
+    left: -2px;
     position: relative;
     top: 8px;
 `;
@@ -139,7 +145,7 @@ class AppToday extends React.Component {
         };
 
         return (
-            <Wrapper>
+            <Wrapper className="today">
                 <CSSTransition
                     classNames={{
                         enter: 'uk-animation-slide-bottom-small'

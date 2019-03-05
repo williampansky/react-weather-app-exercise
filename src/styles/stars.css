@@ -1,6 +1,8 @@
 .evening.stars {
-    width: 1px;
     height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
     background: transparent;
     box-shadow: 1219px 1958px #fff, 1797px 1389px #fff, 1680px 205px #fff,
         1360px 1343px #fff, 569px 951px #fff, 323px 1836px #fff,

@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+import createPersistedState from 'use-persisted-state';
+import { differenceInMinutes } from 'date-fns';
+import Api from './api';
+import AppRoot from './App';
+import LoaderIcon from './components/LoaderIcon';
 import './styles/styles.css';
 import './styles/animation.css';
 import './vendor/fog.css';
 import './styles/stars.css';
-import AppRoot from './App';
-import Api from './api';
-import { differenceInMinutes } from 'date-fns';
-import createPersistedState from 'use-persisted-state';
+
+const AppLoading = styled.div`
+    & > div {
+        width: 100px;
+    }
+`;
 
 function App() {
     /**
@@ -73,7 +81,13 @@ function App() {
     const Timestamp = new Date();
     const humanReadable = Timestamp.toLocaleString();
 
-    return <AppRoot data={api} dataC={apiC} time={humanReadable} />;
+    if (!api || !apiC)
+        return (
+            <AppLoading>
+                <LoaderIcon />
+            </AppLoading>
+        );
+    else return <AppRoot data={api} dataC={apiC} time={humanReadable} />;
 }
 
 const rootElement = document.getElementById('root');

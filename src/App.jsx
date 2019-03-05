@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.3.5
+ * @version 0.3.8
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -13,17 +13,41 @@ import AppLocation from './components/AppLocation';
 import AppSwitcher from './components/AppSwitcher';
 import AppToday from './components/AppToday';
 import DebugBar from './components/DebugBar';
+import MediaQuery from 'react-responsive';
 import SVG from 'react-inlinesvg';
 import { format } from 'date-fns';
 import { getIcon } from './utils/getIcon';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { breakpoints } from './static/breakpoints';
 
-const maxWidth = '670px';
+/**
+ * Uses html.perspective CSS property, which is set to 100vh, to determine
+ * a mobile browser's address bar height; such as Android Chrome's URL bar.
+ *
+ * @member addressBarSize
+ * @memberof App
+ * @type {Number}
+ *
+ * @see [StackOverflow]{@link https://stackoverflow.com/a/54796813}
+ */
+const addressBarSize =
+    parseFloat(getComputedStyle(document.documentElement).perspective) -
+    document.documentElement.clientHeight;
 
+/**
+ * Styled component background wrapper our entire app.
+ * @member Background
+ * @memberof App
+ * @type {styled}
+ */
 const Background = styled.div`
-    height: 100%;
+    height: fit-content;
+    overflow-x: hidden;
+    transition: all 200ms ease-in-out;
     width: 100%;
-    transition: all 600ms ease-in-out;
+
+    @media (min-width: ${breakpoints.minrange}px) {
+        height: 100vh;
+    }
 
     &.fade-in {
         opacity: 0;
@@ -45,31 +69,39 @@ const Background = styled.div`
     }
 `;
 
+/**
+ * Styled component wrapper our entire <main /> app elem.
+ * @member Main
+ * @memberof App
+ * @type {styled}
+ */
 const Main = styled.main`
     align-items: center;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
-    height: 100%;
     margin: auto;
-    max-width: ${maxWidth};
+    max-width: ${breakpoints.minrange}px;
     position: relative;
     width: 100%;
     z-index: 1;
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-width: ${breakpoints.minrange}px) {
         align-items: center;
         display: flex;
         flex-flow: column nowrap;
-        justify-content: center;
         height: 92%;
+        justify-content: center;
         width: 100%;
-    }
-
-    @media (min-width: 1024px) {
     }
 `;
 
+/**
+ * Styled component wrapper for our single AppDay components.
+ * @member Week
+ * @memberof App
+ * @type {styled}
+ */
 const Week = styled.section`
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
     display: grid;
@@ -78,37 +110,65 @@ const Week = styled.section`
     grid-template-columns: repeat(1, 1fr);
     width: 100%;
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-width: ${breakpoints.minrange}px) {
         grid-template-columns: repeat(5, 1fr);
     }
 `;
 
+/**
+ * Styled component wrapper our entire today view;
+ * contains the location name, the date string,
+ * the weather display, the app switcher,
+ * and image graphic.
+ *
+ * @member Location
+ * @memberof App
+ * @type {styled}
+ */
 const Location = styled.article`
     width: 100%;
 
-    @media (max-width: ${maxWidth}) {
-        height: 100%;
+    @media (max-width: ${breakpoints.maxrange}px) {
+        height: calc(90vh - ${addressBarSize}px);
         align-items: center;
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-between;
     }
+
+    @media (max-height: 500px) and (max-width: ${breakpoints.maxrange}px) {
+        flex-flow: row nowrap;
+    }
 `;
 
+/**
+ * Styled component wrapper for our top-centered location and date.
+ * @member Info
+ * @memberof App
+ * @type {styled}
+ */
 const Info = styled.header`
     color: var(--color-black);
-    margin: 0 auto;
+    margin: 20px auto 0;
     padding: 1em;
     text-align: center;
     width: 100%;
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-width: ${breakpoints.minrange}px) {
         color: white;
         margin: 0 auto 20px;
         text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
     }
 `;
 
+/**
+ * Styled component wrapper for our top-centered date string;
+ * e.g: Tuesday, Mar 5, 2019
+ *
+ * @member DateToday
+ * @memberof App
+ * @type {styled}
+ */
 const DateToday = styled.time`
     color: inherit;
     display: block;
@@ -118,6 +178,14 @@ const DateToday = styled.time`
     margin: 0;
 `;
 
+/**
+ * Styled component wrapper for the weather display and
+ * switcher component that sits at the top of our graphic.
+ *
+ * @member TodaysWeatherAndControls
+ * @memberof App
+ * @type {styled}
+ */
 const TodaysWeatherAndControls = styled.div`
     align-items: center;
     bottom: auto;
@@ -125,9 +193,8 @@ const TodaysWeatherAndControls = styled.div`
     flex-flow: column nowrap;
     left: 0;
     padding: 1em 1.5em;
-    position: absolute;
+    /position: absolute;
     right: 0;
-    /top: -75px;
     z-index: 1;
 
     form {
@@ -146,30 +213,58 @@ const TodaysWeatherAndControls = styled.div`
         }
     }
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-width: ${breakpoints.minrange}px) {
         align-items: flex-start;
         flex-flow: row nowrap;
         justify-content: space-between;
-        top: 0;
+        position: absolute;
+
+        form {
+            margin: auto 0;
+        }
+    }
+
+    @media (max-height: 600px) {
+        position: relative;
+    }
+
+    @media (max-height: 600px) and (min-width: ${breakpoints.minrange}px) {
+        background: var(--color-graphic-bg);
+        position: relative;
     }
 `;
 
+/**
+ * Styled component wrapper for our main Dallas image.
+ *
+ * @member Graphic
+ * @memberof App
+ * @type {styled}
+ */
 const Graphic = styled.footer`
-    display: none;
     position: relative;
     width: 100%;
 
-    @media (min-height: 600px) {
-        display: block;
+    picture {
+        display: none;
+        @media (min-height: 560px) {
+            display: block;
+        }
     }
 
-    @media (min-width: ${maxWidth}) {
+    @media (min-width: ${breakpoints.minrange}px) {
         box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
     }
 `;
 
+/**
+ * Styled component wrapper for our SVG clouds.
+ *
+ * @member Cloud
+ * @memberof App
+ * @type {styled}
+ */
 const floatDuration = '15'; // in seconds
-
 const Cloud = styled.div`
     pointer-events: none;
     position: absolute;
@@ -196,6 +291,7 @@ const Cloud = styled.div`
     }
 
     @media (min-width: 1024px) {
+        display: block;
         z-index: 1;
     }
 
@@ -237,25 +333,38 @@ class App extends React.Component {
             units: ''
         };
 
-        this.toCelsius = this.toCelsius.bind(this);
-        this.toFahrenheit = this.toFahrenheit.bind(this);
+        this.setCelsius = this.setCelsius.bind(this);
+        this.setFahrenheit = this.setFahrenheit.bind(this);
         this.handleDegreesChange = this.handleDegreesChange.bind(this);
     }
 
-    toCelsius() {
+    /**
+     * Sets the app's units to metric (Celsius).
+     * @method setCelsius
+     */
+    setCelsius() {
         this.setState({
             data: this.props.dataC,
             units: 'm/s'
         });
     }
 
-    toFahrenheit() {
+    /**
+     * Sets the app's units to Fahrenheit.
+     * @method setFahrenheit
+     */
+    setFahrenheit() {
         this.setState({
             data: this.props.data,
             units: 'mph'
         });
     }
 
+    /**
+     * Takes in a string and sets the background state.
+     * @method setBackground
+     * @param {String} value
+     */
     setBackground(value) {
         this.setState({
             background: value
@@ -263,36 +372,73 @@ class App extends React.Component {
     }
 
     /**
-     * @see [StackOverflow]{@link https://stackoverflow.com/a/13245058}
+     * Takes in a string and sets the time state.
+     * @method setStateTime
+     * @param {String} value
      */
-    getTimeOfDay() {
-        var today = new Date();
-        var curHr = today.getHours();
-
-        if (curHr < 12) return 'morning';
-        else if (curHr < 18) return 'afternoon';
-        else return 'evening';
-    }
-
     setStateTime(value) {
         this.setState({
             time: value
         });
     }
 
-    handleDegreesChange = event => {
-        localStorage.setItem('degrees', event.target.value);
-        this.setState({ scale: event.target.value });
-        event.target.value === 'C' ? this.toCelsius() : this.toFahrenheit();
-    };
-
+    /**
+     * Takes in a boolean and sets the fog state.
+     * @method setFog
+     * @param {Boolean} bool
+     */
     setFog(bool) {
         this.setState({ fog: bool });
     }
 
     /**
+     * Creates a new Date() and returns
+     * a colloquial time of day phrase.
+     *
+     * @method getTimeOfDay
+     * @see [StackOverflow]{@link https://stackoverflow.com/a/13245058}
+     */
+    getTimeOfDay() {
+        var today = new Date();
+        var currentHour = today.getHours();
+
+        if (currentHour < 4) return 'evening';
+        else if (currentHour < 12) return 'morning';
+        else if (currentHour < 18) return 'afternoon';
+        else return 'evening';
+    }
+
+    /**
+     * Takes in an event and sets the app's degrees value;
+     * such as setting the state to Celsius or Fahrenheit.
+     *
+     * @method handleDegreesChange
+     * @param {Event}
+     */
+    handleDegreesChange = event => {
+        localStorage.setItem('degrees', event.target.value);
+        this.setState({ scale: event.target.value });
+        event.target.value === 'C' ? this.setCelsius() : this.setFahrenheit();
+    };
+
+    /**
+     * Takes in a param number and matches it against the internal
+     * codes array. If the array includes the param, return true.
+     *
+     * @method renderFog
+     * @param {Number} value
+     */
+    renderFog(value) {
+        const codes = [801, 802, 803, 804];
+        if (codes.includes(value)) return true;
+    }
+
+    /**
      * Applies fake values to this.state to
      * manually control dynamic elements.
+     *
+     * @method setFauxState
+     * @param {Event}
      */
     setFauxState = event => {
         event.target.blur();
@@ -318,9 +464,8 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        if (!this.props.data && !this.props.dataC) return;
         this.setStateTime(this.getTimeOfDay());
-        this.state.scale === 'C' ? this.toCelsius() : this.toFahrenheit();
+        this.state.scale === 'C' ? this.setCelsius() : this.setFahrenheit();
 
         if (this.state.fog) this.setFog(true);
 
@@ -341,8 +486,12 @@ class App extends React.Component {
     }
 
     render() {
+        if (!this.props.data && !this.props.dataC && !this.props.time)
+            return <div />;
+
         const data = this.state.data;
         const today = _.get(data, 'data', []).slice(0, 1);
+        const todaysCode = _.get(data, 'data[0].weather.code', {});
         const week = _.get(data, 'data', []).slice(1);
 
         return (
@@ -352,12 +501,23 @@ class App extends React.Component {
                     time={this.state.time}
                     onSetDebugState={this.setFauxState}
                 />
-                <div className={'stars ' + this.state.time} />
-                <div id="fog" className={this.state.fog ? 'active' : ''} />
+                <MediaQuery minWidth={breakpoints.minrange}>
+                    <div className={'stars ' + this.state.time} />
+                    <div
+                        id="fog"
+                        className={
+                            this.state.fog || this.renderFog(todaysCode)
+                                ? 'active'
+                                : ''
+                        }
+                    />
+                </MediaQuery>
                 <Main>
-                    <Cloud className={'left ' + this.state.time}>
-                        <SVG cacheGetRequests src="media/cloud-01.svg" />
-                    </Cloud>
+                    <MediaQuery minWidth={breakpoints.minrange}>
+                        <Cloud className={'left ' + this.state.time}>
+                            <SVG cacheGetRequests src="media/cloud-01.svg" />
+                        </Cloud>
+                    </MediaQuery>
                     <Location>
                         <Info>
                             <AppLocation
@@ -406,12 +566,17 @@ class App extends React.Component {
                                 stagger={0.25}
                                 time={this.state.time}
                                 tooltip={data.valid_date}
+                                high={data.max_temp}
+                                low={data.min_temp}
+                                data={data}
                             />
                         ))}
                     </Week>
-                    <Cloud className={'right ' + this.state.time}>
-                        <SVG cacheGetRequests src="media/cloud-02.svg" />
-                    </Cloud>
+                    <MediaQuery minWidth={breakpoints.minrange}>
+                        <Cloud className={'right ' + this.state.time}>
+                            <SVG cacheGetRequests src="media/cloud-02.svg" />
+                        </Cloud>
+                    </MediaQuery>
                 </Main>
             </Background>
         );
