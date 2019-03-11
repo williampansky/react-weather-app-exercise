@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import createPersistedState from 'use-persisted-state';
 import { differenceInMinutes } from 'date-fns';
 import Api from './api';
-import AppRoot from './App';
+import TheApp from './TheApp';
 import LoaderIcon from './components/LoaderIcon';
 import './styles/styles.css';
 import './styles/animation.css';
@@ -87,7 +87,7 @@ function App() {
                 <LoaderIcon />
             </AppLoading>
         );
-    else return <AppRoot data={api} dataC={apiC} time={humanReadable} />;
+    else return <TheApp data={api} dataC={apiC} time={humanReadable} />;
 }
 
 const rootElement = document.getElementById('root');
