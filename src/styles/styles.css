@@ -33,7 +33,6 @@
 }
 
 .background {
-    background: var(--color-graphic-bg);
     transition: background-image 600ms ease-in-out;
 }
 

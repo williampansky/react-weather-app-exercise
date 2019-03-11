@@ -1,17 +1,16 @@
 /**
- * @module AppSwitcher
- * @version 0.2.9
+ * @module TheDegreeSwitcher
+ * @version 0.3.0
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-const maxWidth = '670px';
+import { colors, breakpoints } from '../styles/styles';
 
 const SwitcherForm = styled.form`
     align-items: center;
-    background-color: #2685bd;
+    background-color: ${colors.primaryDark};
     border-radius: 12.5px;
     display: flex;
     flex-flow: row nowrap;
@@ -20,17 +19,18 @@ const SwitcherForm = styled.form`
     padding: 0 2px;
     width: 55px;
 
-    @media (max-height: 560px) and (max-width: ${maxWidth}) {
+    @media (max-height: 560px) and (max-width: ${breakpoints.maxrange}) {
         display: none;
     }
 `;
-
+// 2685bd
 const Item = styled.div`
     align-items: center;
-    background: ${props => (props.selectedValue ? '#2685bd' : 'transparent')};
+    background: ${props =>
+        props.selectedValue ? colors.primaryDark : 'transparent'};
     border-radius: 50%;
     border: 0;
-    color: ${props => (props.selectedValue ? '#2685bd' : '#fff')};
+    color: ${props => (props.selectedValue ? colors.primaryDark : 'white')};
     display: flex;
     flex-flow: column nowrap;
     font-family: 'Open Sans', sans-serif;
@@ -65,7 +65,7 @@ const Item = styled.div`
 
     &.active {
         background-color: #fff;
-        color: #2685bd;
+        color: ${colors.primary};
     }
 
     &:before {

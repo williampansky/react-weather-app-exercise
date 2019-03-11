@@ -1,8 +1,13 @@
 {
   "name": "weather-app",
-  "version": "0.1.9",
-  "description": "",
-  "keywords": [],
+  "version": "0.2.0",
+  "description": "Weather API-driven learning exercise for learning React.",
+  "keywords": [
+    "api",
+    "react",
+    "weather",
+    "weatherbit"
+  ],
   "main": "src/index.js",
   "dependencies": {
     "axios": "0.18.0",

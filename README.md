@@ -245,6 +245,11 @@ class App extends React.Component {
 // ...
 ```
 
+# describe about choosing _not_ to use the optional city choosing feature,
+
+because the UI would change so drastically via not having access to the same
+style of image/graphic for other cities as I do for Dallas.
+
 <!-- LINKS -->
 
 [axios]: https://github.com/axios/axios

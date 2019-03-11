@@ -404,3 +404,30 @@
         transform: translateX(-1px);
     }
 }
+
+/* ========================================================================
+   Clouds floating animations
+ ========================================================================== */
+@keyframes floatUp {
+    0% {
+        transform: translatey(0);
+    }
+    50% {
+        transform: translatey(-25px);
+    }
+    100% {
+        transform: translatey(0);
+    }
+}
+
+@keyframes floatDown {
+    0% {
+        transform: translatey(0);
+    }
+    50% {
+        transform: translatey(15px);
+    }
+    100% {
+        transform: translatey(0);
+    }
+}

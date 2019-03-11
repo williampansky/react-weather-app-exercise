@@ -1,6 +1,6 @@
 /**
- * @module AppToday
- * @version 0.1.8
+ * @module TheDayToday
+ * @version 0.2.0
  * @see [CSSTransition]{@link http://reactcommunity.org/react-transition-group}
  */
 
@@ -9,10 +9,10 @@ import styled from 'styled-components';
 import CountUp from 'react-countup';
 import AppIcon from '../components/AppIcon';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { breakpoints } from '../static/breakpoints';
+import { colors, breakpoints } from '../styles/styles';
 
 const component = {
-    margin: '12px'
+    margin: 12
 };
 
 const Wrapper = styled.div`
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    margin-bottom: ${component.margin};
+    margin-bottom: ${component.margin}px;
 
     .icon {
         left: -8px;
@@ -30,6 +30,10 @@ const Wrapper = styled.div`
         svg {
             height: 46px;
             width: 46px;
+        }
+
+        svg path {
+            fill: ${colors.primaryDark};
         }
 
         &[data-icon='cloud-lightning'] {
@@ -46,14 +50,14 @@ const Wrapper = styled.div`
         left: -4px;
     }
 
-    @media (min-width: ${breakpoints.mindrange}) {
+    @media (min-width: ${breakpoints.mindrange}px) {
         margin-bottom: 0;
-        margin-right: ${component.margin};
+        margin-right: ${component.margin}px;
     }
 `;
 
 const Degrees = styled.div`
-    color: var(--color-primary);
+    color: ${colors.primaryDark};
     display: block;
     font-size: 48px;
     font-stretch: normal;
@@ -62,7 +66,7 @@ const Degrees = styled.div`
     letter-spacing: normal;
     line-height: 1;
     line-height: normal;
-    margin-right: ${component.margin};
+    margin-right: ${component.margin}px;
     text-align: center;
 `;
 
@@ -75,7 +79,7 @@ const DegreesIcon = styled.sup`
 
 const Conditions = styled.div`
     align-items: flex-start;
-    color: var(--color-primary);
+    color: ${colors.primaryDark};
     display: flex;
     flex-flow: column nowrap;
     font-size: 14px;
@@ -83,7 +87,7 @@ const Conditions = styled.div`
     white-space: nowrap;
 
     @media (min-width: 425px) {
-        margin-left: calc(${component.margin} - 4px);
+        margin-left: calc(${component.margin}px - 4px);
     }
 `;
 

@@ -1,19 +1,19 @@
 /**
- * @module AppGraphic
- * @version 0.1.7
+ * @module TheMainGraphic
+ * @version 0.1.8
  */
 
 import React from 'react';
 import styled from 'styled-components';
-import { breakpoints } from '../static/breakpoints';
+import { colors, breakpoints, globals } from '../styles/styles';
 
 const Wrapper = styled.section`
     height: 100%;
     overflow: hidden;
     width: 100%;
     display: none;
-    background-color: var(--color-graphic-bg);
-    width: 670px;
+    background-color: ${colors.graphicBg};
+    width: ${breakpoints.minrange}px;
     height: 368px;
 
     @media (min-height: 560px) {
@@ -21,8 +21,8 @@ const Wrapper = styled.section`
     }
 
     @media (min-width: ${breakpoints.minrange}px) {
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
+        border-top-left-radius: ${globals.borderRadius}px;
+        border-top-right-radius: ${globals.borderRadius}px;
         max-height: 368px;
         min-height: 300px;
     }

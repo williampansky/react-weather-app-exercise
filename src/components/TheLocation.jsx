@@ -1,14 +1,13 @@
 /**
- * @module AppLocation
- * @version 0.1.8
+ * @module TheLocation
+ * @version 0.1.9
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
-
-const maxWidth = '670px';
+import { colors, breakpoints } from '../styles/styles';
 
 const Wrapper = styled.div`
     align-items: center;
@@ -22,8 +21,8 @@ const Wrapper = styled.div`
     }
 
     .icon svg path {
-        fill: var(--color-black);
-        @media (min-width: ${maxWidth}) {
+        fill: ${colors.black};
+        @media (min-width: ${breakpoints.minrange}px) {
             fill: white;
         }
     }

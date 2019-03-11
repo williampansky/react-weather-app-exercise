@@ -4,7 +4,7 @@
  * conditions, and the temperature from the api call.
  *
  * @module AppDay
- * @version 0.2.6
+ * @version 0.2.7
  * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
  * @see [React-Responsive]{@link https://github.com/contra/react-responsive}
  */
@@ -16,9 +16,12 @@ import AppTooltip from '../components/AppTooltip';
 import CountUp from 'react-countup';
 import { format } from 'date-fns';
 import MediaQuery from 'react-responsive';
-import { breakpoints } from '../static/breakpoints';
+import { colors, breakpoints, globals } from '../styles/styles';
 
-const maxWidth = 670;
+const component = {
+    divSize: 45,
+    iconSize: 30
+};
 
 const Article = styled.article`
     background: white;
@@ -28,7 +31,7 @@ const Article = styled.article`
     width: 100%;
 
     & + article {
-        border-top: 1px solid #d8d8d8;
+        border-top: 1px solid ${colors.grayLight};
     }
 
     @media (min-width: ${breakpoints.minrange}px) {
@@ -36,22 +39,22 @@ const Article = styled.article`
         overflow-y: visible;
 
         &:first-child {
-            border-bottom-left-radius: 3px;
+            border-bottom-left-radius: ${globals.borderRadius}px;
         }
 
         &:last-child {
-            border-bottom-right-radius: 3px;
+            border-bottom-right-radius: ${globals.borderRadius}px;
         }
 
         & + article {
             border-top: 0;
-            border-left: 1px solid #d8d8d8;
+            border-left: 1px solid ${colors.grayLight};
         }
     }
 `;
 
 const Header = styled.header`
-    color: var(--color-black);
+    color: ${colors.black};
     align-items: center;
     display: flex;
     flex-flow: row nowrap;
@@ -65,7 +68,7 @@ const Header = styled.header`
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
-        width: 45px;
+        width: ${component.divSize}px;
     }
 
     & > div:nth-child(2) {
@@ -77,17 +80,16 @@ const Header = styled.header`
     }
 
     .icon {
-        --icon-size: 30px;
         width: 100%;
-        height: var(--icon-size);
+        height: ${component.iconSize}px;
 
         svg {
             width: inherit;
-            height: var(--icon-size);
+            height: ${component.iconSize}px;
         }
 
         svg path {
-            fill: var(--color-primary);
+            fill: ${colors.primary};
         }
     }
 
@@ -97,26 +99,26 @@ const Header = styled.header`
         padding: 1em 2em;
 
         .icon {
-            width: calc(var(--icon-size) + 10px);
-            height: calc(var(--icon-size) + 10px);
+            width: calc(${component.iconSize}px + 10px);
+            height: calc(${component.iconSize}px + 10px);
 
             svg {
-                width: calc(var(--icon-size) + 10px);
-                height: calc(var(--icon-size) + 10px);
+                width: calc(${component.iconSize}px + 10px);
+                height: calc(${component.iconSize}px + 10px);
             }
         }
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: ${breakpoints.large}px) {
         padding: 1em 2em;
 
         .icon {
-            width: calc(var(--icon-size) + 10px);
-            height: calc(var(--icon-size) + 10px);
+            width: calc(${component.iconSize}px + 10px);
+            height: calc(${component.iconSize}px + 10px);
 
             svg {
-                width: calc(var(--icon-size) + 10px);
-                height: calc(var(--icon-size) + 10px);
+                width: calc(${component.iconSize}px + 10px);
+                height: calc(${component.iconSize}px + 10px);
             }
         }
     }
@@ -133,7 +135,7 @@ const DateAndConditions = styled.section`
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
-        width: 45px;
+        width: ${component.divSize}px;
     }
 
     & > div:nth-child(2) {
@@ -211,10 +213,10 @@ const TempLow = styled.div`
 `;
 
 const Footer = styled.footer`
-    --icon-color-high: var(--color-danger);
-    --icon-color-low: var(--color-secondary);
+    --icon-color-high: ${colors.danger};
+    --icon-color-low: ${colors.secondary};
     align-items: center;
-    background: #f8f8f8;
+    background: ${colors.whiteSlt};
     display: grid;
     flex: 1;
     grid-area: info;

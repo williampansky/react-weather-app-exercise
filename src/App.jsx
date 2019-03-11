@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.3.8
+ * @version 0.3.9
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -8,16 +8,16 @@ import _ from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
 import AppDay from './components/AppDay';
-import AppGraphic from './components/AppGraphic';
-import AppLocation from './components/AppLocation';
-import AppSwitcher from './components/AppSwitcher';
-import AppToday from './components/AppToday';
-import DebugBar from './components/DebugBar';
+import TheDayToday from './components/TheDayToday';
+import TheDebugBar from './components/TheDebugBar';
+import TheDegreeSwitcher from './components/TheDegreeSwitcher';
+import TheLocation from './components/TheLocation';
+import TheMainGraphic from './components/TheMainGraphic';
 import MediaQuery from 'react-responsive';
 import SVG from 'react-inlinesvg';
 import { format } from 'date-fns';
 import { getIcon } from './utils/getIcon';
-import { breakpoints } from './static/breakpoints';
+import { colors, breakpoints } from './styles/styles';
 
 /**
  * Uses html.perspective CSS property, which is set to 100vh, to determine
@@ -40,6 +40,7 @@ const addressBarSize =
  * @type {styled}
  */
 const Background = styled.div`
+    background-color: ${colors.graphicBg};
     height: fit-content;
     overflow-x: hidden;
     transition: all 200ms ease-in-out;
@@ -47,25 +48,6 @@ const Background = styled.div`
 
     @media (min-width: ${breakpoints.minrange}px) {
         height: 100vh;
-    }
-
-    &.fade-in {
-        opacity: 0;
-    }
-    &.fade-in--active {
-        transition: opacity 600ms ease-in-out;
-    }
-    &.fade-in--done {
-        opacity: 1;
-    }
-    &.fade-out {
-        opacity: 1;
-    }
-    &.fade-out--active {
-        transition: opacity 300ms ease-in-out;
-    }
-    &.fade-out--done {
-        opacity: 0;
     }
 `;
 
@@ -148,7 +130,7 @@ const Location = styled.article`
  * @type {styled}
  */
 const Info = styled.header`
-    color: var(--color-black);
+    color: ${colors.black};
     margin: 20px auto 0;
     padding: 1em;
     text-align: center;
@@ -193,7 +175,6 @@ const TodaysWeatherAndControls = styled.div`
     flex-flow: column nowrap;
     left: 0;
     padding: 1em 1.5em;
-    /position: absolute;
     right: 0;
     z-index: 1;
 
@@ -229,7 +210,7 @@ const TodaysWeatherAndControls = styled.div`
     }
 
     @media (max-height: 600px) and (min-width: ${breakpoints.minrange}px) {
-        background: var(--color-graphic-bg);
+        background: ${colors.graphicBg};
         position: relative;
     }
 `;
@@ -290,33 +271,9 @@ const Cloud = styled.div`
         display: none;
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: ${breakpoints.large}px) {
         display: block;
         z-index: 1;
-    }
-
-    @keyframes floatUp {
-        0% {
-            transform: translatey(0);
-        }
-        50% {
-            transform: translatey(-25px);
-        }
-        100% {
-            transform: translatey(0);
-        }
-    }
-
-    @keyframes floatDown {
-        0% {
-            transform: translatey(0);
-        }
-        50% {
-            transform: translatey(15px);
-        }
-        100% {
-            transform: translatey(0);
-        }
     }
 `;
 
@@ -399,8 +356,8 @@ class App extends React.Component {
      * @see [StackOverflow]{@link https://stackoverflow.com/a/13245058}
      */
     getTimeOfDay() {
-        var today = new Date();
-        var currentHour = today.getHours();
+        let today = new Date();
+        let currentHour = today.getHours();
 
         if (currentHour < 4) return 'evening';
         else if (currentHour < 12) return 'morning';
@@ -496,7 +453,7 @@ class App extends React.Component {
 
         return (
             <Background className={'background ' + this.state.background}>
-                <DebugBar
+                <TheDebugBar
                     fog={this.state.fog}
                     time={this.state.time}
                     onSetDebugState={this.setFauxState}
@@ -520,7 +477,7 @@ class App extends React.Component {
                     </MediaQuery>
                     <Location>
                         <Info>
-                            <AppLocation
+                            <TheLocation
                                 city={data.city_name}
                                 state={data.state_code}
                             />
@@ -536,7 +493,7 @@ class App extends React.Component {
                         <Graphic>
                             <TodaysWeatherAndControls>
                                 {today.map((data, i) => (
-                                    <AppToday
+                                    <TheDayToday
                                         key={i}
                                         day={data.valid_date}
                                         degrees={data.temp}
@@ -546,12 +503,12 @@ class App extends React.Component {
                                         units={this.state.units}
                                     />
                                 ))}
-                                <AppSwitcher
+                                <TheDegreeSwitcher
                                     onDegreesChange={this.handleDegreesChange}
                                     selectedValue={this.state.scale}
                                 />
                             </TodaysWeatherAndControls>
-                            <AppGraphic />
+                            <TheMainGraphic />
                         </Graphic>
                     </Location>
                     <Week>

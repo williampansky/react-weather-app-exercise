@@ -28,6 +28,7 @@ class AppIcon extends React.Component {
     onLoadHandler() {
         this.setState({ loaded: true });
     }
+
     render() {
         return (
             <Icon className="icon" data-icon={this.props.src}>
