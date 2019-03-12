@@ -1,9 +1,10 @@
 /**
  * @module AppLabel
- * @version 0.1.1
+ * @version 0.1.2
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Element = styled.label`
@@ -17,5 +18,13 @@ class AppLabel extends React.Component {
         return <Element>{this.props.text}</Element>;
     }
 }
+
+AppLabel.propTypes = {
+    text: PropTypes.string
+};
+
+AppLabel.defaultProps = {
+    text: 'Unknown'
+};
 
 export default AppLabel;

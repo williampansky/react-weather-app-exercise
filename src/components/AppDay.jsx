@@ -4,12 +4,13 @@
  * conditions, and the temperature from the api call.
  *
  * @module AppDay
- * @version 0.2.7
+ * @version 0.2.9
  * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
  * @see [React-Responsive]{@link https://github.com/contra/react-responsive}
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
 import AppTooltip from '../components/AppTooltip';
@@ -213,10 +214,8 @@ const TempLow = styled.div`
 `;
 
 const Footer = styled.footer`
-    --icon-color-high: ${colors.danger};
-    --icon-color-low: ${colors.secondary};
     align-items: center;
-    background: ${colors.whiteSlt};
+    background: ${colors.whiteAlt};
     display: grid;
     flex: 1;
     grid-area: info;
@@ -414,5 +413,30 @@ class AppDay extends React.Component {
         );
     }
 }
+
+AppDay.propTypes = {
+    conditions: PropTypes.string,
+    data: PropTypes.object,
+    high: PropTypes.number,
+    icon: PropTypes.string,
+    index: PropTypes.number,
+    low: PropTypes.number,
+    stagger: PropTypes.number
+};
+
+AppDay.defaultProps = {
+    conditions: 'Unknown',
+    data: {
+        clouds: 0,
+        pop: 0,
+        rh: 0,
+        valid_date: new Date()
+    },
+    high: 0,
+    icon: 'cloud-sun',
+    index: 0,
+    low: 0,
+    stagger: 0.25
+};
 
 export default AppDay;

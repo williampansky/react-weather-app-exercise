@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.3.9
+ * @version 0.4.0
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -494,13 +494,13 @@ class App extends React.Component {
                             <TodaysWeatherAndControls>
                                 {today.map((data, i) => (
                                     <TheDayToday
-                                        key={i}
                                         day={data.valid_date}
                                         degrees={data.temp}
                                         icon={getIcon(data.weather.code)}
+                                        key={i}
                                         sky={data.weather.description}
-                                        wind={data.wind_spd}
                                         units={this.state.units}
+                                        wind={data.wind_spd}
                                     />
                                 ))}
                                 <TheDegreeSwitcher
@@ -508,24 +508,23 @@ class App extends React.Component {
                                     selectedValue={this.state.scale}
                                 />
                             </TodaysWeatherAndControls>
-                            <TheMainGraphic />
+                            <TheMainGraphic
+                                alt="Vector illustration of the Dallas skyline."
+                                image="dallas"
+                            />
                         </Graphic>
                     </Location>
                     <Week>
                         {week.map((data, i) => (
                             <AppDay
-                                key={i}
                                 conditions={data.weather.description}
-                                day={data.valid_date}
-                                degrees={data.temp}
+                                data={data}
+                                high={data.max_temp}
                                 icon={getIcon(data.weather.code)}
                                 index={i}
-                                stagger={0.25}
-                                time={this.state.time}
-                                tooltip={data.valid_date}
-                                high={data.max_temp}
+                                key={i}
                                 low={data.min_temp}
-                                data={data}
+                                stagger={0.25}
                             />
                         ))}
                     </Week>

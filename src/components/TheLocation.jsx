@@ -1,6 +1,6 @@
 /**
  * @module TheLocation
- * @version 0.1.9
+ * @version 0.2.0
  */
 
 import React from 'react';
@@ -13,17 +13,28 @@ const Wrapper = styled.div`
     align-items: center;
     display: flex;
     flex-flow: row nowrap;
+    font-size: 18px;
     justify-content: center;
 
-    .icon svg {
-        width: 1.875em;
-        height: 1.465em;
-    }
+    .icon {
+        margin-right: 6px;
 
-    .icon svg path {
-        fill: ${colors.black};
-        @media (min-width: ${breakpoints.minrange}px) {
-            fill: white;
+        svg {
+            width: 1em;
+            height: 1.22em;
+
+            @media (min-width: ${breakpoints.minrange}px) {
+                width: 0.667em;
+                height: 0.85em;
+            }
+        }
+
+        svg path {
+            fill: ${colors.black};
+
+            @media (min-width: ${breakpoints.minrange}px) {
+                fill: white;
+            }
         }
     }
 `;
@@ -36,11 +47,11 @@ const CityState = styled.h1`
     margin: 0 0.35em 0.25em 0.15em;
 
     @media (min-width: 425px) {
-        font-size: 1.875em;
+        font-size: 1em;
     }
 `;
 
-class AppLocation extends React.Component {
+class TheLocation extends React.Component {
     render() {
         return (
             <Wrapper>
@@ -54,14 +65,14 @@ class AppLocation extends React.Component {
     }
 }
 
-AppLocation.propTypes = {
+TheLocation.propTypes = {
     city: PropTypes.string,
     state: PropTypes.string
 };
 
-AppLocation.defaultProps = {
+TheLocation.defaultProps = {
     city: 'Unknown',
     state: 'N/A'
 };
 
-export default AppLocation;
+export default TheLocation;

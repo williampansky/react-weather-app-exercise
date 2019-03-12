@@ -1,10 +1,11 @@
 /**
  * @module AppTooltip
- * @version 0.1.6
+ * @version 0.1.7
  * @since 0.1.3 - Can use single props.text or multi line props
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
 
@@ -72,8 +73,6 @@ class AppTooltip extends React.Component {
     render() {
         return (
             <Wrapper className="tooltip">
-                <div>{this.props.text}</div>
-                <div>{this.props.date}</div>
                 <div>{this.props.conditions}</div>
                 <HighLow>
                     <High className="uk-animation-slide-bottom-small">
@@ -89,5 +88,17 @@ class AppTooltip extends React.Component {
         );
     }
 }
+
+AppTooltip.propTypes = {
+    conditions: PropTypes.string,
+    high: PropTypes.number,
+    low: PropTypes.number
+};
+
+AppTooltip.defaultProps = {
+    conditions: 'Unknown',
+    high: 0,
+    low: 0
+};
 
 export default AppTooltip;

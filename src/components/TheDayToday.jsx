@@ -1,10 +1,11 @@
 /**
  * @module TheDayToday
- * @version 0.2.0
+ * @version 0.2.1
  * @see [CSSTransition]{@link http://reactcommunity.org/react-transition-group}
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import CountUp from 'react-countup';
 import AppIcon from '../components/AppIcon';
@@ -109,7 +110,7 @@ const WindConditions = styled.div`
     }
 `;
 
-class AppToday extends React.Component {
+class TheDayToday extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -214,4 +215,22 @@ class AppToday extends React.Component {
     }
 }
 
-export default AppToday;
+TheDayToday.propTypes = {
+    day: PropTypes.string,
+    degrees: PropTypes.number,
+    icon: PropTypes.string,
+    sky: PropTypes.string,
+    units: PropTypes.string,
+    wind: PropTypes.number
+};
+
+TheDayToday.defaultProps = {
+    day: new Date(),
+    degrees: 0,
+    icon: 'cloud-sun',
+    sky: 'Unknown',
+    units: 'mph',
+    wind: 0
+};
+
+export default TheDayToday;

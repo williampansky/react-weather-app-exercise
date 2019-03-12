@@ -11,11 +11,11 @@ Develop a weather application with the following specifications:
         encouraged).
 -   [x] You should be able to toggle between Fahrenheit and Celsius.
 -   [x] It should match the provided comp as closely as possible on desktop.
--   [ ] We do not provide a mobile mockup as you will determine how that functions on your own.
+-   [x] We do not provide a mobile mockup as you will determine how that functions on your own.
 -   [x] Icons should correspond to proper weather conditions.
--   [ ] It should be responsive, rendering appropriately on tablet, and handheld form factors.
+-   [x] It should be responsive, rendering appropriately on tablet, and handheld form factors.
 -   [x] Your application may use any open weather API.
--   [ ] Your application should showcase one animation technique of your choosing in order to give the
+-   [x] Your application should showcase one animation technique of your choosing in order to give the
         application some life.
 -   [ ] _(Optional)_ Allow for user input to change location of forecast (city, state, or zip)
 
@@ -38,8 +38,8 @@ Develop a weather application with the following specifications:
     -   [ ] ...
 -   [x] Develop base-level app wireframe.
 -   [x] Install `styled-components` package.
--   [ ] Fine-tune scaffold and components.
--   [ ] Polish stylesheets.
+-   [x] Fine-tune scaffold and components.
+-   [x] Polish stylesheets.
 -   [x] Download assets from Zelplin.io [provided comp].
 -   [x] Integrate weather API.
 -   [ ] Integrate accessibility.
@@ -47,10 +47,10 @@ Develop a weather application with the following specifications:
 -   [ ] Integrate webapp (SPA) icons into HTML file.
 -   [ ] Integrate meta tags into HTML file.
 -   [ ] Refactor for responsiveness.
--   [ ] Refactor for semantic HTML.
--   [ ] Enhance with animations.
+-   [x] Refactor for semantic HTML.
+-   [x] Enhance with animations.
 -   [ ] Write JEST tests.
--   [ ] Test on mobile & tablet devices.
+-   [x] Test on mobile & tablet devices.
 -   [ ] Test for WCAG & accessibility.
 -   [ ] Browser checks.
 

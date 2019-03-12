@@ -1,9 +1,10 @@
 /**
  * @module TheMainGraphic
- * @version 0.1.8
+ * @version 0.1.9
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { colors, breakpoints, globals } from '../styles/styles';
 
@@ -53,26 +54,39 @@ const Image = styled.img`
     }
 `;
 
-class AppGraphic extends React.Component {
+class TheMainGraphic extends React.Component {
     render() {
         return (
             <Wrapper className="uk-animation-fade">
                 <picture>
                     <source
                         type="image/jpeg"
-                        srcSet="media/dallas@3x.jpg"
+                        srcSet={`media/${this.props.image}@3x.jpg`}
                         media="(min-width: 670px)"
                     />
                     <source
                         type="image/jpeg"
-                        srcSet="media/dallas@2x.jpg"
+                        srcSet={`media/${this.props.image}@2x.jpg`}
                         media="(min-width: 411px)"
                     />
-                    <Image alt="" src="media/dallas.jpg" />
+                    <Image
+                        alt={this.props.alt}
+                        src={`media/${this.props.image}.jpg`}
+                    />
                 </picture>
             </Wrapper>
         );
     }
 }
 
-export default AppGraphic;
+TheMainGraphic.propTypes = {
+    alt: PropTypes.string,
+    image: PropTypes.string
+};
+
+TheMainGraphic.defaultProps = {
+    alt: 'Vector illustration of the Dallas skyline.',
+    image: 'dallas'
+};
+
+export default TheMainGraphic;

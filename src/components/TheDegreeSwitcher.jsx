@@ -1,6 +1,6 @@
 /**
  * @module TheDegreeSwitcher
- * @version 0.3.0
+ * @version 0.3.1
  */
 
 import React from 'react';
@@ -77,7 +77,7 @@ const Item = styled.div`
     }
 `;
 
-class AppSwitcher extends React.Component {
+class TheDegreeSwitcher extends React.Component {
     constructor(props) {
         super(props);
 
@@ -145,10 +145,14 @@ class AppSwitcher extends React.Component {
     }
 }
 
-AppSwitcher.propTypes = {
-    active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+TheDegreeSwitcher.propTypes = {
     onDegreesChange: PropTypes.func,
     selectedValue: PropTypes.string
 };
 
-export default AppSwitcher;
+TheDegreeSwitcher.defaultProps = {
+    onDegreesChange: () => {},
+    selectedValue: 'F'
+};
+
+export default TheDegreeSwitcher;
