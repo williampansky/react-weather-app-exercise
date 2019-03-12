@@ -1,11 +1,12 @@
 /**
  * @namespace api
  * @see [Reference]{@link https://alligator.io/react/axios-react/}
- * @version 0.1.2
+ * @see [Webtask]{@link https://wt-30c7730f9ad0ef866a5444aa1e3835dc-0.sandbox.auth0-extend.com/reactweatherapi}
+ * @version 0.1.3
  */
-// https://wt-30c7730f9ad0ef866a5444aa1e3835dc-0.sandbox.auth0-extend.com/reactweatherapi
+
 import axios from 'axios';
-// localStorage.getItem('key')
+
 const api = {
     endpoint: 'https://api.weatherbit.io/v2.0/forecast/daily',
     key: 'cf21dc715619499798c4781dc9601a77',

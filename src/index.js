@@ -28,8 +28,10 @@ function App() {
         [apiC, setDataC] = useWeatherStateC();
 
     /**
-     * @see [Reference]
-     * {@link https://www.robinwieruch.de/react-hooks-fetch-data/}
+     * Calls axios.create() and sets localStorage data responses
+     * with setDataF & setDataC via createPersistedState.
+     * @function fetchData
+     * @see [Reference] {@link https://www.robinwieruch.de/react-hooks-fetch-data/}
      */
     const fetchData = async () => {
         const result = await Api.get('?units=I');

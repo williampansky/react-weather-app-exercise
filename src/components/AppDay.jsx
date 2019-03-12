@@ -4,7 +4,7 @@
  * conditions, and the temperature from the api call.
  *
  * @module AppDay
- * @version 0.2.9
+ * @version 0.3.0
  * @see [formatDate]{@link https://date-fns.org/v1.30.1/docs/format}
  * @see [React-Responsive]{@link https://github.com/contra/react-responsive}
  */
@@ -14,8 +14,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AppIcon from '../components/AppIcon';
 import AppTooltip from '../components/AppTooltip';
-import CountUp from 'react-countup';
 import { format } from 'date-fns';
+import CountUp from 'react-countup';
 import MediaQuery from 'react-responsive';
 import { colors, breakpoints, globals } from '../styles/styles';
 
@@ -288,11 +288,24 @@ class AppDay extends React.Component {
     render() {
         const open = this.state.open ? 'open' : undefined;
         const hovering = this.state.hovering ? 'hovering' : undefined;
+
         const handleMouseEnter = () => this.setState({ hovering: true });
         const handleMouseLeave = () => this.setState({ hovering: false });
+
         const handleToggle = () => {
-            if (!this.state.open) this.setState({ open: true });
-            else this.setState({ open: false });
+            if (!this.state.open) {
+                this.setState({ open: true });
+                setTimeout(() => {
+                    let coord = this.instance.getBoundingClientRect().y;
+                    window.scrollTo({
+                        top: coord,
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            } else {
+                this.setState({ open: false });
+            }
         };
 
         return (
@@ -300,7 +313,8 @@ class AppDay extends React.Component {
                 className={[open, hovering]}
                 onClick={handleToggle}
                 onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}>
+                onMouseLeave={handleMouseLeave}
+                ref={el => (this.instance = el)}>
                 <MediaQuery minWidth={breakpoints.minrange}>
                     <AppTooltip
                         conditions={this.props.conditions}
