@@ -136,7 +136,7 @@ class DebugBar extends React.Component {
             { name: 'Rain', value: 'rain', enabled: false },
             { name: 'Snow', value: 'snow', enabled: false },
             { name: 'Stars', value: 'stars', enabled: false },
-            { name: 'Thunder', value: 'thunder', enabled: false },
+            { name: 'Thunder', value: 'thunder', enabled: true },
             { name: 'Wind', value: 'wind', enabled: false }
         ];
 
@@ -162,24 +162,27 @@ class DebugBar extends React.Component {
                     ))}
                 </FlexItem>
                 <FlexItem>
-                    {conditions
-                        .filter(item => {
-                            return item.enabled;
-                        })
-                        .map((item, idx) => (
-                            <Button
-                                key={idx}
-                                value={item.value}
-                                type="button"
-                                className={
-                                    this.props.time === item.value
-                                        ? 'active'
-                                        : ''
-                                }
-                                onClick={this.props.onSetDebugState}>
-                                {item.name}
-                            </Button>
-                        ))}
+                    <Button
+                        value="fog"
+                        type="button"
+                        className={this.props.fog ? 'active' : ''}
+                        onClick={this.props.onSetDebugState}>
+                        fog
+                    </Button>
+                    <Button
+                        value="rain"
+                        type="button"
+                        className={this.props.rain ? 'active' : ''}
+                        onClick={this.props.onSetDebugState}>
+                        rain
+                    </Button>
+                    <Button
+                        value="thunder"
+                        type="button"
+                        className={this.props.thunder ? 'active' : ''}
+                        onClick={this.props.onSetDebugState}>
+                        thunder
+                    </Button>
                 </FlexItem>
             </Bar>
         );

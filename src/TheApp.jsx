@@ -15,6 +15,7 @@ import TheLocation from './components/TheLocation';
 import TheMainGraphic from './components/TheMainGraphic';
 import MediaQuery from 'react-responsive';
 import SVG from 'react-inlinesvg';
+import { Rain } from './vendor/rain';
 import { format } from 'date-fns';
 import { getIcon } from './utils/getIcon';
 import { colors, breakpoints } from './styles/styles';
@@ -49,6 +50,11 @@ const Background = styled.div`
     @media (min-width: ${breakpoints.minrange}px) {
         height: 100vh;
     }
+
+    @media (max-height: 500px) {
+        max-width: 100%;
+        overflow: hidden;
+    }
 `;
 
 /**
@@ -75,6 +81,11 @@ const Main = styled.main`
         height: 92%;
         justify-content: center;
         width: 100%;
+    }
+
+    @media (max-height: 500px) {
+        height: calc(90vh - ${addressBarSize}px);
+        width: 80%;
     }
 `;
 
@@ -131,14 +142,14 @@ const Location = styled.article`
  */
 const Info = styled.header`
     color: ${colors.black};
-    margin: 20px auto 0;
+    margin: 10px auto 0;
     padding: 1em;
     text-align: center;
     width: 100%;
 
     @media (min-width: ${breakpoints.minrange}px) {
         color: white;
-        margin: 0 auto 20px;
+        margin: 0 auto 10px;
         text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
     }
 `;
@@ -183,11 +194,12 @@ const TodaysWeatherAndControls = styled.div`
     }
 
     @media (min-width: 320px) {
-        padding: 1.5em 2em;
+        padding: 0.5em 1em;
     }
 
     @media (min-width: 425px) {
         align-items: center;
+        padding: 1.5em 2em;
 
         form {
             margin-top: 0;
@@ -275,6 +287,10 @@ const Cloud = styled.div`
         display: block;
         z-index: 1;
     }
+
+    @media (max-height: 500px) {
+        display: none;
+    }
 `;
 
 class App extends React.Component {
@@ -285,8 +301,10 @@ class App extends React.Component {
             fog: false,
             background: '',
             data: '',
+            rain: false,
             scale: localStorage.getItem('degrees'),
             time: '',
+            thunder: false,
             units: ''
         };
 
@@ -346,6 +364,25 @@ class App extends React.Component {
      */
     setFog(bool) {
         this.setState({ fog: bool });
+    }
+
+    /**
+     * Takes in a boolean and sets the rain state.
+     * @method setRain
+     * @param {Boolean} bool
+     */
+    setRain(bool) {
+        this.setState({ rain: bool });
+        Rain(bool);
+    }
+
+    /**
+     * Takes in a boolean and sets the thunder state.
+     * @method setThunder
+     * @param {Boolean} bool
+     */
+    setThunder(bool) {
+        this.setState({ thunder: bool });
     }
 
     /**
@@ -415,6 +452,14 @@ class App extends React.Component {
             case 'fog':
                 this.state.fog ? this.setFog(false) : this.setFog(true);
                 break;
+            case 'rain':
+                this.state.rain ? this.setRain(false) : this.setRain(true);
+                break;
+            case 'thunder':
+                this.state.thunder
+                    ? this.setThunder(false)
+                    : this.setThunder(true);
+                break;
             default:
                 return;
         }
@@ -455,11 +500,15 @@ class App extends React.Component {
             <Background className={'background ' + this.state.background}>
                 <TheDebugBar
                     fog={this.state.fog}
+                    rain={this.state.rain}
+                    thunder={this.state.thunder}
                     time={this.state.time}
                     onSetDebugState={this.setFauxState}
                 />
                 <MediaQuery minWidth={breakpoints.minrange}>
+                    <canvas id="canvas" />
                     <div className={'stars ' + this.state.time} />
+                    <div className={'thunder ' + this.state.thunder} />
                     <div
                         id="fog"
                         className={

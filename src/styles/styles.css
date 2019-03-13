@@ -65,6 +65,8 @@ canvas {
     position: absolute;
     width: 100%;
     height: 100%;
+    opacity: 0.65;
+    z-index: 1;
 }
 
 .drop {
@@ -109,10 +111,11 @@ canvas {
     width: 100%;
     opacity: 0;
     transition: opacity 300ms ease-in-out;
+    z-index: 0;
 }
 
 .thunder.true {
-    opacity: 1;
+    opacity: 0.5;
 }
 
 @keyframes thunder-bg {
