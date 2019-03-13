@@ -1,3 +1,7 @@
+/**
+ * Ty sir
+ * @see [CodePen]{@link https://codepen.io/SidneyD/pen/MYbzPj}
+ */
 export const Rain = bool => {
     var ctx;
     var cW;
