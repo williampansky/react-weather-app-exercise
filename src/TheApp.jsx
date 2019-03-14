@@ -1,6 +1,6 @@
 /**
  * @namespace App
- * @version 0.4.0
+ * @version 0.4.1
  * @see [Components]{@link https://blog.bitsrc.io/reusable-components-in-react-a-practical-guide-ec15a81a4d71}
  */
 
@@ -17,7 +17,7 @@ import MediaQuery from 'react-responsive';
 import SVG from 'react-inlinesvg';
 import { Rain } from './vendor/rain';
 import { format } from 'date-fns';
-import { getIcon } from './utils/getIcon';
+import { getIcon, getRandomIcon } from './utils/getIcon';
 import { colors, breakpoints } from './styles/styles';
 
 /**
@@ -302,6 +302,7 @@ class App extends React.Component {
             background: '',
             data: '',
             rain: false,
+            randomizeIcons: false,
             scale: localStorage.getItem('degrees'),
             time: '',
             thunder: false,
@@ -374,6 +375,15 @@ class App extends React.Component {
     setRain(bool) {
         this.setState({ rain: bool });
         Rain(bool);
+    }
+
+    /**
+     * Takes in a boolean and sets the randomizeIcons state.
+     * @method setRandomIcons
+     * @param {Boolean} bool
+     */
+    setRandomIcons(bool) {
+        this.setState({ randomizeIcons: bool });
     }
 
     /**
@@ -460,6 +470,11 @@ class App extends React.Component {
                     ? this.setThunder(false)
                     : this.setThunder(true);
                 break;
+            case 'icons':
+                this.state.randomizeIcons
+                    ? this.setRandomIcons(false)
+                    : this.setRandomIcons(true);
+                break;
             default:
                 return;
         }
@@ -499,6 +514,7 @@ class App extends React.Component {
         return (
             <Background className={'background ' + this.state.background}>
                 <TheDebugBar
+                    icons={this.state.randomizeIcons}
                     fog={this.state.fog}
                     rain={this.state.rain}
                     thunder={this.state.thunder}
@@ -512,7 +528,7 @@ class App extends React.Component {
                     <div
                         id="fog"
                         className={
-                            this.state.fog || this.renderFog(todaysCode)
+                            this.state.fog && this.renderFog(todaysCode)
                                 ? 'active'
                                 : ''
                         }
@@ -545,7 +561,11 @@ class App extends React.Component {
                                     <TheDayToday
                                         day={data.valid_date}
                                         degrees={data.temp}
-                                        icon={getIcon(data.weather.code)}
+                                        icon={
+                                            this.state.randomizeIcons
+                                                ? getIcon(getRandomIcon())
+                                                : getIcon(data.weather.code)
+                                        }
                                         key={i}
                                         sky={data.weather.description}
                                         units={this.state.units}
@@ -569,7 +589,11 @@ class App extends React.Component {
                                 conditions={data.weather.description}
                                 data={data}
                                 high={data.max_temp}
-                                icon={getIcon(data.weather.code)}
+                                icon={
+                                    this.state.randomizeIcons
+                                        ? getIcon(getRandomIcon())
+                                        : getIcon(data.weather.code)
+                                }
                                 index={i}
                                 key={i}
                                 low={data.min_temp}

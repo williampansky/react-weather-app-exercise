@@ -56,3 +56,52 @@ export const getIcon = code => {
     else if (groups.thunderstorms.includes(code)) return icons.storm;
     else return icons.unknown;
 };
+
+/**
+ * Returns a randomized icon number.
+ * @method getRandomIcon
+ */
+export const getRandomIcon = () => {
+    const icons = [
+        800,
+        801,
+        802,
+        803,
+        300,
+        301,
+        302,
+        700,
+        711,
+        721,
+        731,
+        741,
+        751,
+        804,
+        500,
+        501,
+        502,
+        511,
+        520,
+        521,
+        522,
+        600,
+        601,
+        602,
+        610,
+        611,
+        612,
+        621,
+        622,
+        623,
+        200,
+        201,
+        202,
+        230,
+        231,
+        232,
+        233
+    ];
+
+    let randomIcon = icons[Math.floor(Math.random() * icons.length)];
+    return randomIcon;
+};

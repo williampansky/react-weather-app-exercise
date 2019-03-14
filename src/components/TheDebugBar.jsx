@@ -183,6 +183,13 @@ class DebugBar extends React.Component {
                         onClick={this.props.onSetDebugState}>
                         thunder
                     </Button>
+                    <Button
+                        value="icons"
+                        type="button"
+                        className={this.props.icons ? 'active' : ''}
+                        onClick={this.props.onSetDebugState}>
+                        icons
+                    </Button>
                 </FlexItem>
             </Bar>
         );
