@@ -484,7 +484,7 @@ class App extends React.Component {
         this.setStateTime(this.getTimeOfDay());
         this.state.scale === 'C' ? this.setCelsius() : this.setFahrenheit();
 
-        if (this.state.fog) this.setFog(true);
+        // if (this.state.fog) this.setFog(true);
 
         switch (this.getTimeOfDay()) {
             case 'morning':
