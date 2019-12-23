@@ -6,53 +6,53 @@
 
 Develop a weather application with the following specifications:
 
--   [x] It should show the 5-day weather forecast for Dallas, TX.
--   [x] Your application should utilize ReactJS (usage of boilerplates such as Create React App are
-        encouraged).
--   [x] You should be able to toggle between Fahrenheit and Celsius.
--   [x] It should match the provided comp as closely as possible on desktop.
--   [x] We do not provide a mobile mockup as you will determine how that functions on your own.
--   [x] Icons should correspond to proper weather conditions.
--   [x] It should be responsive, rendering appropriately on tablet, and handheld form factors.
--   [x] Your application may use any open weather API.
--   [x] Your application should showcase one animation technique of your choosing in order to give the
-        application some life.
--   [ ] _(Optional)_ Allow for user input to change location of forecast (city, state, or zip)
+- [x] It should show the 5-day weather forecast for Dallas, TX.
+- [x] Your application should utilize ReactJS (usage of boilerplates such as Create React App are
+      encouraged).
+- [x] You should be able to toggle between Fahrenheit and Celsius.
+- [x] It should match the provided comp as closely as possible on desktop.
+- [x] We do not provide a mobile mockup as you will determine how that functions on your own.
+- [x] Icons should correspond to proper weather conditions.
+- [x] It should be responsive, rendering appropriately on tablet, and handheld form factors.
+- [x] Your application may use any open weather API.
+- [x] Your application should showcase one animation technique of your choosing in order to give the
+      application some life.
+- [ ] _(Optional)_ Allow for user input to change location of forecast (city, state, or zip)
 
 ## Documentation & reference
 
--   [Weatherbit 5day/3hour](https://www.weatherbit.io/api/weather-forecast-5-day)
--   [Weatherbit 16day/daily](https://www.weatherbit.io/api/weather-forecast-16-day)
+- [Weatherbit 5day/3hour](https://www.weatherbit.io/api/weather-forecast-5-day)
+- [Weatherbit 16day/daily](https://www.weatherbit.io/api/weather-forecast-16-day)
 
 ## Todo
 
--   [x] Initial research.
-    -   [x] API: [weatherbit]
-    -   [x] XHR: [axios]
-    -   [x] Styles: [styled-components]
-    -   [x] ~~State management: [mobx]~~
--   [x] Setup base-level project scaffold.
--   [ ] Plan out components.
-    -   [x] `AppDay.jsx` - _Displays a single day of the upcoming 5-day week. It visually shows a user an abbreviated day name, an icon representing the day's projected weather conditions, and the temperature from the api call_.
-    -   [x] `AppGraphic.jsx` - _Displays a static image representing the city/location selected; Dallas in this example._
-    -   [ ] ...
--   [x] Develop base-level app wireframe.
--   [x] Install `styled-components` package.
--   [x] Fine-tune scaffold and components.
--   [x] Polish stylesheets.
--   [x] Download assets from Zelplin.io [provided comp].
--   [x] Integrate weather API.
--   [ ] Integrate accessibility.
--   [ ] Integrate Schema/SEO.
--   [ ] Integrate webapp (SPA) icons into HTML file.
--   [ ] Integrate meta tags into HTML file.
--   [ ] Refactor for responsiveness.
--   [x] Refactor for semantic HTML.
--   [x] Enhance with animations.
--   [ ] Write JEST tests.
--   [x] Test on mobile & tablet devices.
--   [ ] Test for WCAG & accessibility.
--   [ ] Browser checks.
+- [x] Initial research.
+  - [x] API: [weatherbit]
+  - [x] XHR: [axios]
+  - [x] Styles: [styled-components]
+  - [x] ~~State management: [mobx]~~
+- [x] Setup base-level project scaffold.
+- [ ] Plan out components.
+  - [x] `AppDay.jsx` - _Displays a single day of the upcoming 5-day week. It visually shows a user an abbreviated day name, an icon representing the day's projected weather conditions, and the temperature from the api call_.
+  - [x] `AppGraphic.jsx` - _Displays a static image representing the city/location selected; Dallas in this example._
+  - [ ] ...
+- [x] Develop base-level app wireframe.
+- [x] Install `styled-components` package.
+- [x] Fine-tune scaffold and components.
+- [x] Polish stylesheets.
+- [x] Download assets from Zelplin.io [provided comp].
+- [x] Integrate weather API.
+- [ ] Integrate accessibility.
+- [ ] Integrate Schema/SEO.
+- [ ] Integrate webapp (SPA) icons into HTML file.
+- [ ] Integrate meta tags into HTML file.
+- [ ] Refactor for responsiveness.
+- [x] Refactor for semantic HTML.
+- [x] Enhance with animations.
+- [ ] Write JEST tests.
+- [x] Test on mobile & tablet devices.
+- [ ] Test for WCAG & accessibility.
+- [ ] Browser checks.
 
 ## Difficulties
 
@@ -67,11 +67,11 @@ Reading the Api response and selecting the correct index from the next weekday w
 ```js
 // omitted...
 <Week>
-    <AppDay day={api.data[1].timestamp_utc} />
-    <AppDay day={api.data[2].timestamp_utc} />
-    <AppDay day={api.data[3].timestamp_utc} />
-    <AppDay day={api.data[4].timestamp_utc} />
-    <AppDay day={api.data[5].timestamp_utc} />
+  <AppDay day={api.data[1].timestamp_utc} />
+  <AppDay day={api.data[2].timestamp_utc} />
+  <AppDay day={api.data[3].timestamp_utc} />
+  <AppDay day={api.data[4].timestamp_utc} />
+  <AppDay day={api.data[5].timestamp_utc} />
 </Week>
 // etc...
 ```
@@ -82,18 +82,18 @@ Despite all this, I eventually refactored my `<AppDay />` component calls into a
 
 ```js
 const data = this.state.data;
-const week = _.get(data, 'data', []).slice(1);
+const week = _.get(data, "data", []).slice(1);
 
 <Week>
-    {week.map((data, i) => (
-        <AppDay
-            key={i}
-            day={data.valid_date}
-            degrees={data.temp}
-            icon={getIcon(data.weather.code)}
-            tooltip={data.valid_date}
-        />
-    ))}
+  {week.map((data, i) => (
+    <AppDay
+      key={i}
+      day={data.valid_date}
+      degrees={data.temp}
+      icon={getIcon(data.weather.code)}
+      tooltip={data.valid_date}
+    />
+  ))}
 </Week>;
 ```
 
@@ -110,19 +110,19 @@ A free plan from [weatherbit] allows for 1,000 calls/day; therefore I needed a w
  * @see [StackOverflow]{@link https://stackoverflow.com/a/42529483}
  */
 const refreshApi = () => {
-    const HOUR = 1000 * 60 * 60;
-    const THREEHOURS = HOUR * 3;
-    const threeHoursAgo = Date.now() - THREEHOURS;
+  const HOUR = 1000 * 60 * 60;
+  const THREEHOURS = HOUR * 3;
+  const threeHoursAgo = Date.now() - THREEHOURS;
 
-    const token = localStorage.getItem('token');
-    if (!token) localStorage.setItem('token', new Date());
+  const token = localStorage.getItem("token");
+  if (!token) localStorage.setItem("token", new Date());
 
-    if (token < threeHoursAgo) {
-        localStorage.setItem('token', new Date());
-        return true;
-    } else {
-        return false;
-    }
+  if (token < threeHoursAgo) {
+    localStorage.setItem("token", new Date());
+    return true;
+  } else {
+    return false;
+  }
 };
 ```
 
@@ -130,7 +130,7 @@ This little guy simply constructs a 3-hour variable, `THREEHOURS`, and a variabl
 
 ```js
 useEffect(() => {
-    if (refreshApi() === true) fetchData();
+  if (refreshApi() === true) fetchData();
 }, []);
 ```
 
@@ -140,29 +140,29 @@ The app requires that icons, _"... correspond to proper weather conditions."_ Co
 
 ```js
 const getIcon = code => {
-    const icons = {
-        cloudDrizzle: 'cloud-drizzle-sun',
-        cloudDrizzleSun: 'cloud-drizzle-sun',
-        cloudLightning: 'cloud-lightning',
-        cloudSun: 'cloud-sun'
-    };
+  const icons = {
+    cloudDrizzle: "cloud-drizzle-sun",
+    cloudDrizzleSun: "cloud-drizzle-sun",
+    cloudLightning: "cloud-lightning",
+    cloudSun: "cloud-sun"
+  };
 
-    const groups = {
-        drizzle: [300, 301, 302],
-        general: [800, 801, 802, 803, 804, 900],
-        hazards: [700, 711, 721, 731, 741, 751],
-        rain: [500, 501, 502, 511, 520, 521, 522],
-        snow: [600, 601, 602, 610, 611, 612, 621, 622, 623],
-        thunderstorms: [200, 201, 202, 230, 231, 232, 233]
-    };
+  const groups = {
+    drizzle: [300, 301, 302],
+    general: [800, 801, 802, 803, 804, 900],
+    hazards: [700, 711, 721, 731, 741, 751],
+    rain: [500, 501, 502, 511, 520, 521, 522],
+    snow: [600, 601, 602, 610, 611, 612, 621, 622, 623],
+    thunderstorms: [200, 201, 202, 230, 231, 232, 233]
+  };
 
-    if (groups.drizzle.includes(code)) return icons.cloudDrizzle;
-    else if (groups.general.includes(code)) return icons.cloudSun;
-    else if (groups.hazards.includes(code)) return icons.cloudSun;
-    else if (groups.rain.includes(code)) return icons.cloudDrizzle;
-    else if (groups.snow.includes(code)) return icons.cloudDrizzle;
-    else if (groups.thunderstorms.includes(code)) return icons.cloudLightning;
-    else return icons.cloudSun;
+  if (groups.drizzle.includes(code)) return icons.cloudDrizzle;
+  else if (groups.general.includes(code)) return icons.cloudSun;
+  else if (groups.hazards.includes(code)) return icons.cloudSun;
+  else if (groups.rain.includes(code)) return icons.cloudDrizzle;
+  else if (groups.snow.includes(code)) return icons.cloudDrizzle;
+  else if (groups.thunderstorms.includes(code)) return icons.cloudLightning;
+  else return icons.cloudSun;
 };
 ```
 
@@ -185,34 +185,34 @@ Handling the functionality to switch between Fahrenheit and Celsius proved parti
 
 ```js
 // before celcius integration
-const useWeatherState = createPersistedState('api');
+const useWeatherState = createPersistedState("api");
 const [api, setData] = useWeatherState();
 
 // after celcius integration
-const useWeatherState = createPersistedState('api'),
-    useWeatherStateC = createPersistedState('apiC');
+const useWeatherState = createPersistedState("api"),
+  useWeatherStateC = createPersistedState("apiC");
 const [api, setDataF] = useWeatherState(),
-    [apiC, setDataC] = useWeatherStateC();
+  [apiC, setDataC] = useWeatherStateC();
 ```
 
 **Next**, I needed to find a way to swap between using `api` and `apiC` as dynamic parent objects to pass down the data. My first try revolved around setting up a conditional check and a two mutable `let` declarations:
 
 ```js
 let api;
-const selection = localStorage.getItem('degrees');
-if (selection === 'F') api = apiF;
-else if (selection === 'C') api = apiC;
+const selection = localStorage.getItem("degrees");
+if (selection === "F") api = apiF;
+else if (selection === "C") api = apiC;
 else api = apiF;
 
 let state = {
-    cityName: api.city_name,
-    stateCode: api.state_code,
-    today: {
-        temp: api.data[0].temp,
-        date: api.data[0].valid_date,
-        conditions: api.data[0]
-    }
-    // etc...
+  cityName: api.city_name,
+  stateCode: api.state_code,
+  today: {
+    temp: api.data[0].temp,
+    date: api.data[0].valid_date,
+    conditions: api.data[0]
+  }
+  // etc...
 };
 ```
 
@@ -222,10 +222,10 @@ So, let's take a look at how I refactored to using `setState`.
 
 ```js
 // index.js
-import AppRoot from './App';
+import AppRoot from "./App";
 function App() {
-    // omitted...
-    return <AppRoot data={api} dataC={apiC} />;
+  // omitted...
+  return <AppRoot data={api} dataC={apiC} />;
 }
 ```
 
@@ -244,11 +244,6 @@ class App extends React.Component {
     }
 // ...
 ```
-
-# describe about choosing _not_ to use the optional city choosing feature,
-
-because the UI would change so drastically via not having access to the same
-style of image/graphic for other cities as I do for Dallas.
 
 <!-- LINKS -->
 
